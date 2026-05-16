@@ -186,10 +186,10 @@
     <div class="setting-row"><span id="skyLabel"></span><select id="skySelect"><option value="default">🌌 <span id="skySpace"></span></option><option value="night">🌑 <span id="skyNight"></span></option><option value="aurora">🌠 <span id="skyAurora"></span></option><option value="sunset">🌅 <span id="skySunset"></span></option></select></div>
     <div class="setting-row"><span id="langLabel">🌐</span>
         <select id="langSelect">
-            <option value="ru">🇷🇺 <span id="langRu"></span></option>
-            <option value="en">🇬🇧 <span id="langEn"></span></option>
-            <option value="es">🇪🇸 <span id="langEs"></span></option>
-        </select>
+    <option value="ru">🇷🇺 Русский</option>
+    <option value="en">🇬🇧 English</option>
+    <option value="es">🇪🇸 Español</option>
+</select>
     </div>
     <button class="close-btn" id="resetWaveBtn"></button>
     <button class="close-btn" id="closeSettings"></button></div>
@@ -390,9 +390,9 @@ const starTypes = [
     { id: 'double',  hue:300, size:10, speed:2.5, value:300,  weight:1.5, seedChance:0.60, doubleClick:true, clicksNeeded:2 },
     { id: 'pixel',   hue:200, size:7,  speed:2.0, value:200,  weight:2,   seedChance:0.25, doubleClick:false },
     { id: 'nova',  hue:240, size:6,  speed:8.0, value:100000, weight:0.05, seedChance:0.95, doubleClick:false },
-    { id: 'red',   hue:0,   size:14, speed:1.8, value:0,     weight:0.8,  seedChance:0.10, doubleClick:false, explode:true },
+    { id: 'red',   hue:0,   size:14, speed:1.8, value:0,     weight:1.2,  seedChance:0.10, doubleClick:false, explode:true },
 ];
-
+    
 function getMaxSeeds() { return Math.min(500, BASE_SEED_CAP + (seedCapLvl-1)*40); }
 function random(min,max) { return Math.random()*(max-min)+min; }
 function randomInt(min,max) { return Math.floor(random(min,max+1)); }
