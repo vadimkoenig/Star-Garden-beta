@@ -1292,22 +1292,7 @@ function updateAllTexts() {
     document.getElementById('settingsTitle').textContent = t('settings');
     document.getElementById('statsTitle').textContent = t('stats');
     document.getElementById('tutorialTitle').textContent = t('tutorial');
-    document.getElementById('themeLabel').textContent = t('themeLabel');
-    document.getElementById('fontLabel').textContent = t('fontLabel');
-    document.getElementById('skyLabel').textContent = t('skyLabel');
-    document.getElementById('themeSpace').textContent = t('themeSpace');
-    document.getElementById('themeLight').textContent = t('themeLight');
-    document.getElementById('themeForest').textContent = t('themeForest');
-    document.getElementById('themeSunset').textContent = t('themeSunset');
-    document.getElementById('skySpace').textContent = t('skySpace');
-    document.getElementById('skyNight').textContent = t('skyNight');
-    document.getElementById('skyAurora').textContent = t('skyAurora');
-    document.getElementById('skySunset').textContent = t('skySunset');
-    document.getElementById('seedsLabel').textContent = t('seedsLabel');
-    document.getElementById('gardenGrowingLabel').textContent = t('gardenGrowing');
-    document.getElementById('gardenSecondsLabel').textContent = t('seconds');
-    document.getElementById('harvestLabel').textContent = t('harvestLabel');
-    document.getElementById('gardenAutoPlantLabel').textContent = t('gardenAutoPlant');
+    
     initShopTabs();
     updateUI();
 }
@@ -1448,7 +1433,9 @@ canvas.addEventListener('touchmove', e => {
 canvas.addEventListener('touchend', () => { mouseX = -100; mouseY = -100; });
 // Загрузка игры и запуск
 loadGame();
-updateAllTexts();
+setTimeout(() => {
+    updateAllTexts();
+}, 100);
 updateUI();
 resizeCanvas();
 
