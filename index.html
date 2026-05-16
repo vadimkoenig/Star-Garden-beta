@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="ru" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>⭐ Star Garden v2.0.2</title>
+    <style>
+        :root {
+            --bg: #0a0a1a;
+            --ui-bg: rgba(20, 10, 40, 0.85);
+            --text: #e0d8ff;
+            --gold: #ffd700;
+            --border: rgba(140, 120, 220, 0.5);
+            --btn-bg: rgba(160, 140, 240, 0.15);
+            --btn-hover: rgba(180, 160, 255, 0.3);
+            --modal-bg: #0f0b24;
+            --font: 'Segoe UI', Arial, sans-serif;
+            --sky-top: #05051a;
+            --sky-bottom: #111838;
+        }
+        body.light {
+            --bg: #f0eefc; --ui-bg: rgba(255,255,255,0.8); --text: #2a1f4a; --gold: #b8860b;
+            --border: rgba(100,80,180,0.4); --btn-bg: rgba(180,160,220,0.2); --btn-hover: rgba(200,180,240,0.4); --modal-bg: #fff;
+            --sky-top: #d0d8ff; --sky-bottom: #b0b8e0;
+        }
+        body.forest {
+            --bg: #1a2e1a; --ui-bg: rgba(20,40,20,0.8); --text: #d4e8d0; --gold: #c0a040;
+            --border: rgba(100,160,100,0.5); --btn-bg: rgba(80,120,80,0.2); --btn-hover: rgba(100,150,100,0.4); --modal-bg: #0f1f0f;
+            --sky-top: #0a1a0a; --sky-bottom: #1a3a1a;
+        }
+        body.sunset {
+            --bg: #2a1a0a; --ui-bg: rgba(40,20,10,0.8); --text: #ffe0c0; --gold: #ffaa40;
+            --border: rgba(200,140,80,0.5); --btn-bg: rgba(180,120,60,0.2); --btn-hover: rgba(200,140,80,0.4); --modal-bg: #1f0f04;
+            --sky-top: #2a0a0a; --sky-bottom: #4a1a0a;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html, body {
+            width: 100vw; max-width: 100vw;
+            overflow-x: hidden;
+            background: var(--bg);
+            font-family: var(--font);
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+            position: relative;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            transition: background 0.5s;
+        }
+        .game-wrapper {
+            width: 100%;
+            max-width: 700px;
+            height: 100vh;
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
+            padding: 5px; margin: 0 auto;
+            box-sizing: border-box;
+            position: relative;
+        }
+        canvas {
+            border-radius: 20px; cursor: pointer;
+            box-shadow: 0 0 30px rgba(100,80,200,0.4), 0 0 60px rgba(80,60,180,0.15);
+            width: auto; max-width: 100%; flex-shrink: 0;
+        }
+        .lang-switch {
+            position: absolute; top: 8px; right: 8px; background: var(--ui-bg);
+            border-radius: 20px; padding: 4px 8px; display: flex; gap: 4px; z-index: 10;
+            border: 1px solid var(--border);
+        }
+        .lang-btn {
+            background: transparent; border: none; color: var(--text); cursor: pointer;
+            font-family: inherit; padding: 3px 8px; border-radius: 12px; font-size: 0.8rem;
+        }
+        .lang-btn.active { background: var(--btn-hover); color: var(--gold); font-weight: bold; }
+        .ui-top {
+            display: flex; gap: 6px; align-items: center; background: var(--ui-bg); padding: 6px 12px;
+            border-radius: 25px; backdrop-filter: blur(8px); border: 1px solid var(--border);
+            color: var(--text); font-size: 0.78rem; flex-wrap: wrap; justify-content: center;
+            width: 100%; max-width: 500px;
+        }
+        .ui-top span { color: var(--gold); font-weight: bold; margin: 0 2px; }
+        .menu-btn, .shop-btn, .garden-btn {
+            background: var(--btn-bg); border: 1px solid var(--border); color: var(--text);
+            padding: 5px 10px; border-radius: 18px; cursor: pointer; font-family: inherit;
+            font-size: 0.73rem; transition: 0.2s;
+        }
+        .menu-btn:hover, .shop-btn:hover, .garden-btn:hover {
+            background: var(--btn-hover); border-color: var(--gold); color: var(--gold);
+        }
+        .modal-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7);
+            display: flex; align-items: center; justify-content: center; z-index:100;
+            backdrop-filter: blur(6px); visibility:hidden; opacity:0; transition:0.2s;
+        }
+        .modal-overlay.active { visibility:visible; opacity:1; }
+        .modal {
+            background: var(--modal-bg); border:2px solid var(--border); border-radius:24px;
+            padding:15px; max-width:95%; width:380px; max-height:85vh; color:var(--text);
+            box-shadow:0 0 50px rgba(100,80,200,0.4); text-align:center; overflow-y:auto;
+        }
+        .modal h2 { font-weight:300; margin-bottom:12px; color:var(--gold); font-size:1.2rem; letter-spacing: 1px; }
+        .tabs { display:flex; justify-content:center; gap:5px; margin-bottom:12px; flex-wrap:wrap; }
+        .tab-btn {
+            background:transparent; border:1px solid var(--border); color:var(--text);
+            padding:5px 10px; border-radius:15px; cursor:pointer; font-family:inherit; font-size:0.72rem;
+        }
+        .tab-btn.active { background:var(--btn-hover); border-color:var(--gold); color:var(--gold); }
+        .shop-item {
+            display:flex; justify-content:space-between; align-items:center; margin:6px 0;
+            padding:6px 10px; background:rgba(255,255,255,0.04); border-radius:12px; font-size:0.78rem;
+        }
+        .shop-item button {
+            background:#2a1f4a; border:1px solid var(--border); color:white; padding:4px 10px;
+            border-radius:12px; cursor:pointer; font-family:inherit; font-size:0.72rem;
+        }
+        .shop-item button:hover:not(:disabled) { background:#4a3f8e; border-color:var(--gold); }
+        .shop-item button:disabled { opacity:0.4; cursor:not-allowed; }
+        .setting-row { display:flex; justify-content:space-between; align-items:center; margin:10px 0; font-size:0.85rem; }
+        select { background:var(--btn-bg); border:1px solid var(--border); color:var(--text); padding:5px 10px; border-radius:8px; font-family:inherit; }
+        .close-btn {
+            margin-top:12px; background:var(--btn-bg); border:1px solid var(--border);
+            color:var(--text); padding:8px 20px; border-radius:20px; cursor:pointer; font-family:inherit;
+        }
+        .stats-table { width:100%; margin:10px 0; border-collapse:collapse; font-size:0.75rem; }
+        .stats-table th, .stats-table td { padding:5px; border-bottom:1px solid var(--border); }
+        .stats-table th { color:var(--gold); }
+        .main-menu { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; height:100%; width:100%; }
+        .main-title { font-size:2rem; font-weight:300; color:var(--gold); text-shadow:0 0 20px var(--gold); letter-spacing:4px; }
+        .main-btn {
+            background:var(--btn-bg); border:2px solid var(--border); color:var(--text);
+            padding:10px 25px; border-radius:30px; font-size:1rem; cursor:pointer;
+            transition:0.3s; width:200px; text-align:center; font-family:inherit;
+        }
+        .main-btn:hover { background:var(--btn-hover); border-color:var(--gold); color:var(--gold); }
+        @media (max-width: 600px) {
+            .ui-top { font-size: 0.9rem; gap: 8px; }
+            .menu-btn, .shop-btn, .garden-btn { font-size: 0.85rem; padding: 6px 12px; }
+            .main-btn { font-size: 1.1rem; padding: 12px 25px; width: 180px; }
+            .modal { width: 90%; max-width: 95%; }
+            .lang-btn { font-size: 0.9rem; padding: 4px 10px; }
+            .main-title { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body class="default" id="bodyTheme">
+    <div class="game-wrapper">
+        <div class="lang-switch" id="langSwitch">
+            <button class="lang-btn active" data-lang="ru">🇷🇺 РУС</button>
+            <button class="lang-btn" data-lang="en">🇬🇧 ENG</button>
+        </div>
+
+        <div id="mainMenu" class="main-menu" style="display:flex;">
+            <div class="main-title" id="mainTitle">✦ STAR GARDEN v2.0 ✦</div>
+            <button class="main-btn" id="playBtn">🎮 Играть</button>
+            <button class="main-btn" id="shopMenuBtn">🛒 Магазин</button>
+            <button class="main-btn" id="gardenMenuBtn">🌱 Сад</button>
+            <button class="main-btn" id="statsMenuBtn">📊 Статистика</button>
+            <button class="main-btn" id="settingsMenuBtn">⚙️ Настройки</button>
+            <button class="main-btn" id="tutorialMenuBtn">📖 Обучение</button>
+        </div>
+
+        <div id="gameScreen" style="display:none; flex-direction:column; align-items:center; width:100%; gap:5px;">
+            <canvas id="gameCanvas"></canvas>
+            <div class="ui-top">
+                <span id="coinDisplay">💰 0</span>
+                <span id="waveDisplay">🌊 1</span>
+                <span id="seedDisplay">🌱 0</span>
+                <button class="shop-btn" id="ingameShopBtn">🛒</button>
+                <button class="garden-btn" id="ingameGardenBtn">🌱</button>
+                <button class="menu-btn" id="backToMenuBtn">🚪 Меню</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="shopModal">
+        <div class="modal"><h2>🛒 Магазин</h2><div class="tabs" id="shopTabs"></div><div id="shopContent"></div><button class="close-btn" id="closeShop">Закрыть</button></div>
+    </div>
+    <div class="modal-overlay" id="gardenModal">
+        <div class="modal"><h2>🌱 Сад</h2><p>Семена: <span id="gardenSeedCount">0</span></p>
+        <p id="gardenStatus">Грядка пуста</p>
+        <button id="plantSeedBtn" disabled>Посадить семя</button>
+        <p id="gardenTimer" style="display:none;">Растёт... <span id="gardenTimeLeft">120</span> сек.</p>
+        <button id="harvestBtn" style="display:none;">🎁 Собрать урожай</button>
+        <p style="font-size:0.7rem; margin-top:5px;">🤖 Авто-посадка: ур. <span id="autoPlantLevel">0</span>/20</p>
+        <button class="close-btn" id="closeGarden">Закрыть</button></div>
+    </div>
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal"><h2>⚙️ Настройки</h2>
+        <div class="setting-row"><span>Тема</span><select id="themeSelect"><option value="default">🌌 Космос</option><option value="light">☀️ Светлая</option><option value="forest">🌲 Лесная</option><option value="sunset">🌅 Закат</option></select></div>
+        <div class="setting-row"><span>Шрифт</span><select id="fontSelect"><option value="'Segoe UI', Arial">Segoe UI</option><option value="'Courier New', monospace">Courier New</option><option value="'Comic Sans MS', cursive">Comic Sans</option><option value="'Georgia', serif">Georgia</option></select></div>
+        <div class="setting-row"><span>Небо</span><select id="skySelect"><option value="default">🌌 Космос</option><option value="night">🌑 Ночь</option><option value="aurora">🌠 Аврора</option><option value="sunset">🌅 Закат</option></select></div>
+        <button class="close-btn" id="resetWaveBtn">🔄 Сбросить волну (цены тоже)</button>
+        <button class="close-btn" id="closeSettings">Закрыть</button></div>
+    </div>
+    <div class="modal-overlay" id="statsModal">
+        <div class="modal"><h2>📊 Статистика</h2><div id="statsContent"></div><button class="close-btn" id="closeStats">Закрыть</button></div>
+    </div>
+    <div class="modal-overlay" id="tutorialModal">
+        <div class="modal"><h2>📖 Обучение</h2><p id="tutorialText"></p><button class="close-btn" id="closeTutorial">Понятно</button></div>
+    </div>
+
+<script>
+// ============ ЧАСТЬ 1: ПЕРЕМЕННЫЕ, ЯЗЫКИ, ЗВУКИ, КАНВАС ============
+const LANG = {
+    ru: {
+        play: '🎮 Играть', shop: '🛒 Магазин', garden: '🌱 Сад', stats: '📊 Статистика', settings: '⚙️ Настройки', tutorial: '📖 Обучение',
+        back: '🚪 Меню', coins: '💰', wave: '🌊', seeds: '🌱', buy: 'Купить', equip: 'Надеть', max: 'Макс', close: 'Закрыть',
+        temp: '⏳ Временные', perm: '🔮 Улучшения', starskins: '✨ Скины звёзд', groundskins: '🌿 Трава', skies: '🌌 Небо',
+        resetWave: '🔄 Сбросить волну', plant: 'Посадить', harvest: '🎁 Собрать',
+        tutorialText: '🌟 Кликай по падающим звёздам.<br>💰 Звёзды дают монеты (1–5000).<br>🌱 Иногда выпадают семена — сажай в Саду.<br>🎁 Урожай даёт баффы или скины.<br>🛒 В магазине: временные усиления, постоянные прокачки, скины звёзд и травы.<br>🔮 Волна растёт, можно сбросить.',
+        totalPlayers: 'Всего игроков: ',
+        statCoins: '🏆 Топ по монетам', statTime: '⏱ Топ по времени', statCaught: '⭐ Топ пойманных', statSeeds: '🌱 Топ семян'
+    },
+    en: {
+        play: '🎮 Play', shop: '🛒 Shop', garden: '🌱 Garden', stats: '📊 Stats', settings: '⚙️ Settings', tutorial: '📖 Tutorial',
+        back: '🚪 Menu', coins: '💰', wave: '🌊', seeds: '🌱', buy: 'Buy', equip: 'Equip', max: 'Max', close: 'Close',
+        temp: '⏳ Temporary', perm: '🔮 Upgrades', starskins: '✨ Star Skins', groundskins: '🌿 Ground', skies: '🌌 Sky',
+        resetWave: '🔄 Reset Wave', plant: 'Plant', harvest: '🎁 Harvest',
+        tutorialText: '🌟 Click falling stars.<br>💰 Stars give coins (1–5000).<br>🌱 Seeds drop sometimes — plant in Garden.<br>🎁 Harvest gives buffs or skins.<br>🛒 Shop: temp boosts, perm upgrades, skins.<br>🔮 Wave grows, can be reset.',
+        totalPlayers: 'Total players: ',
+        statCoins: '🏆 Top Coins', statTime: '⏱ Top Time', statCaught: '⭐ Top Caught', statSeeds: '🌱 Top Seeds'
+    }
+};
+
+let currentLang = 'ru';
+function t(key) { return LANG[currentLang][key] || key; }
+
+// Звуки
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+function initAudio() { if (!audioCtx) audioCtx = new AudioCtx(); }
+function playTone(freq, type, duration, vol = 0.08) {
+    if (!audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type; osc.frequency.value = freq;
+    gain.gain.value = vol; gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(); osc.stop(audioCtx.currentTime + duration);
+}
+function sfxCatch() { playTone(600, 'sine', 0.12, 0.1); setTimeout(() => playTone(1000, 'sine', 0.1, 0.08), 80); }
+function sfxSeed() { playTone(300, 'triangle', 0.15, 0.06); }
+function sfxHarvest() { playTone(500, 'sine', 0.1, 0.08); setTimeout(() => playTone(800, 'sine', 0.12, 0.1), 100); }
+function sfxBuy() { playTone(900, 'square', 0.08, 0.04); }
+function sfxError() { playTone(150, 'sawtooth', 0.2, 0.04); }
+
+// Канвас
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+let W = 500, H = 520;
+function resizeCanvas() {
+    const maxW = Math.min(window.innerWidth - 20, 700);
+    const ratio = 500/520;
+    canvas.style.width = maxW + 'px';
+    canvas.style.height = (maxW / ratio) + 'px';
+    canvas.style.maxWidth = '100%';
+    W = 500; H = 520;
+    canvas.width = W; canvas.height = H;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+function getClickPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    return { x: (e.clientX - rect.left) * (W/rect.width), y: (e.clientY - rect.top) * (H/rect.height) };
+}
+
+// Игровые переменные
+const GROUND_Y = H * 0.78;
+let flowers = [], fallingStars = [], particles = [], floatingTexts = [];
+let totalCaught = 0, wave = 1, coins = 0, seeds = 0;
+let frameCount = 0, mouseX = -100, mouseY = -100, gameRunning = false;
+
+// Улучшения
+let permMultLvl = 1;
+let luckLvl = 0;
+let slowPermLvl = 0;
+let catchRadiusLvl = 0;
+let starSizeLvl = 0;
+let autoCollectLvl = 0;
+let seedCapLvl = 1;
+let autoPlantLvl = 0;
+
+// Временные баффы
+let tempPrices = { x2: 100, slow: 80, magnet: 60, collectAll: 150 };
+let tempCounts = { x2: 0, slow: 0, magnet: 0, collectAll: 0 };
+let tempMult = 1, tempMultTimer = 0;
+let slowMotion = false, slowTimer = 0;
+let magnetActive = false, magnetTimer = 0;
+
+// Скины
+let starSkin = 'default', ownedStarSkins = ['default'];
+let groundSkin = 'green', ownedGroundSkins = ['green'];
+let skySkin = 'default';
+
+// Сад
+let gardenGrowing = false, gardenTimer = 0, gardenReward = null;
+let autoPlantTimer = 0;
+
+// Статистика
+let starCaughtCounts = {};
+let seedsPlanted = 0;
+let playTime = 0;
+let lastTime = Date.now();
+let playerName = 'Player' + Math.floor(Math.random()*1000);
+
+const MAX_FLOWERS = 75;
+const BASE_SEED_CAP = 100;
+
+// Типы звёзд
+const starTypes = [
+    { id: 'yellow',  hue:50,  size:9,  speed:1.0, value:1,    weight:24, seedChance:0.008, doubleClick:false },
+    { id: 'green',   hue:120, size:8,  speed:1.4, value:10,   weight:18, seedChance:0.15,  doubleClick:false },
+    { id: 'blue',    hue:210, size:8,  speed:1.1, value:5,    weight:22, seedChance:0.08,  doubleClick:false },
+    { id: 'purple',  hue:280, size:8,  speed:1.2, value:25,   weight:14, seedChance:0.06,  doubleClick:false },
+    { id: 'maroon',  hue:340, size:10, speed:2.0, value:50,   weight:5,  seedChance:0.04,  doubleClick:false },
+    { id: 'black',   hue:0,   size:12, speed:3.8, value:100,  weight:4,  seedChance:0.20,  doubleClick:false },
+    { id: 'gold',    hue:45,  size:11, speed:4.5, value:1000, weight:0.3, seedChance:0.70, doubleClick:false },
+    { id: 'cyan',    hue:180, size:9,  speed:3.2, value:500,  weight:2,  seedChance:0.40, doubleClick:false },
+    { id: 'rainbow', hue:-1,  size:5,  speed:5.5, value:5000, weight:0.1, seedChance:0.90, doubleClick:false },
+    { id: 'double',  hue:300, size:10, speed:2.5, value:300,  weight:1.5, seedChance:0.60, doubleClick:true, clicksNeeded:2 },
+    { id: 'pixel',   hue:200, size:7,  speed:2.0, value:200,  weight:2,   seedChance:0.25, doubleClick:false },
+];
+
+function getMaxSeeds() { return Math.min(500, BASE_SEED_CAP + (seedCapLvl-1)*40); }
+function random(min,max) { return Math.random()*(max-min)+min; }
+function randomInt(min,max) { return Math.floor(random(min,max+1)); }
+function dist(x1,y1,x2,y2) { return Math.sqrt((x2-x1)**2+(y2-y1)**2); }
+
+function getStarType() {
+    let total = starTypes.reduce((s,t)=>s+t.weight,0);
+    let r = Math.random() * total;
+    const luckBoost = luckLvl * 0.03;
+    for (const t of starTypes) {
+        let w = t.weight;
+        if (['gold','rainbow','cyan','double','pixel'].includes(t.id)) w *= (1 + luckBoost);
+        if ((r -= w) <= 0) return t;
+    }
+    return starTypes[0];
+}
+
+function spawnStar() {
+    const type = getStarType();
+    const sizeMult = 1 + starSizeLvl * 0.085;
+    let speed = random(type.speed*0.9, type.speed*1.3);
+    if (slowMotion) speed *= 0.4;
+    speed *= (1 - slowPermLvl * 0.04);
+    fallingStars.push({
+        x: random(20, W-20), y: random(-300, -50), speed,
+        size: type.size * sizeMult,
+        hue: type.hue === -1 ? frameCount%360 : type.hue,
+        value: type.value, type, twinkle: random(0, Math.PI*2),
+        clicksRemaining: type.doubleClick ? type.clicksNeeded : 0
+    });
+}
+    // ============ ЧАСТЬ 2: ЛОГИКА, ОТРИСОВКА, МАГАЗИН, САД, СТАТИСТИКА ============
+
+function catchStar(star) {
+    let value = Math.floor(star.value * (1 + (permMultLvl-1)*0.45) * tempMult);
+    coins += value;
+    totalCaught++;
+    starCaughtCounts[star.type.id] = (starCaughtCounts[star.type.id] || 0) + 1;
+    sfxCatch();
+    burstParticles(star.x, star.y, star.hue);
+    plantFlower(star.x, star.hue);
+    floatingTexts.push({x:star.x, y:star.y, text:`+${value}`, life:45, color:'#ffd700'});
+    const idx = fallingStars.indexOf(star);
+    if (idx >= 0) fallingStars.splice(idx, 1);
+    if (Math.random() < star.type.seedChance && seeds < getMaxSeeds()) {
+        seeds++;
+        sfxSeed();
+        floatingTexts.push({x:star.x+10, y:star.y-10, text:'🌱', life:35, color:'#aaffaa'});
+    }
+    if (totalCaught % 20 === 0) wave++;
+    updateUI();
+}
+
+function plantFlower(starX, starHue) {
+    if (flowers.length >= MAX_FLOWERS) flowers.shift();
+    flowers.push({
+        x: Math.max(15, Math.min(W-15, starX)),
+        y: GROUND_Y + random(-2, 10),
+        size: random(10, 22),
+        hue: (starHue + random(-20, 20)) % 360,
+        phase: random(0, Math.PI*2),
+        petalCount: randomInt(5, 9)
+    });
+}
+
+function burstParticles(x, y, hue) {
+    for (let i=0; i<14; i++) {
+        const angle = random(0, Math.PI*2);
+        const speed = random(1.5, 5);
+        particles.push({
+            x, y,
+            vx: Math.cos(angle)*speed,
+            vy: Math.sin(angle)*speed - random(1,3),
+            life: 0, maxLife: random(20, 40),
+            hue: hue === 0 ? 0 : (hue + random(-15, 15)),
+            size: random(1.5, 4)
+        });
+    }
+}
+
+function handleClick(cx, cy) {
+    if (!gameRunning) return;
+    initAudio();
+    const radius = 28 + catchRadiusLvl * 2.5;
+    for (let i = fallingStars.length-1; i >= 0; i--) {
+        const star = fallingStars[i];
+        if (dist(cx, cy, star.x, star.y) < radius) {
+            if (star.type.doubleClick && star.clicksRemaining > 1) {
+                star.clicksRemaining--;
+                floatingTexts.push({x:star.x, y:star.y-15, text:`${star.clicksRemaining}`, life:25, color:'#ffffff'});
+                sfxError();
+                return;
+            }
+            catchStar(star);
+            return;
+        }
+    }
+    sfxError();
+}
+
+function update() {
+    if (!gameRunning) return;
+
+    // ВРЕМЕННЫЙ ХАК – ГАРАНТИРОВАННЫЙ СПАВН
+    if (frameCount < 10) {
+        for (let i = 0; i < 8; i++) {
+            const type = starTypes[0];
+            fallingStars.push({
+                x: random(50, W - 50),
+                y: random(100, 250),
+                speed: 1.2,
+                size: 12,
+                hue: 50,
+                value: 1,
+                type: type,
+                twinkle: random(0, Math.PI * 2),
+                clicksRemaining: 0
+            });
+        }
+    }
+
+    frameCount++;
+    
+    const now = Date.now();
+    if (now - lastTime >= 1000) {
+        playTime++;
+        lastTime = now;
+    }
+
+    if (tempMultTimer > 0 && --tempMultTimer <= 0) tempMult = 1;
+    if (slowTimer > 0 && --slowTimer <= 0) slowMotion = false;
+    if (magnetTimer > 0 && --magnetTimer <= 0) magnetActive = false;
+
+    if (gardenGrowing && --gardenTimer <= 0) {
+        gardenGrowing = false;
+        harvestReady();
+        updateGardenUI();
+    }
+
+    if (autoPlantLvl > 0 && !gardenGrowing && !gardenReward && seeds > 0) {
+        autoPlantTimer++;
+        const interval = Math.max(30, 1200 - autoPlantLvl * 55);
+        if (autoPlantTimer >= interval) {
+            autoPlantTimer = 0;
+            seeds--;
+            seedsPlanted++;
+            gardenGrowing = true;
+            gardenTimer = 7200;
+            updateUI();
+            updateGardenUI();
+        }
+    }
+
+if (fallingStars.length < 15) {
+    spawnStar();
+}
+
+    for (let i = fallingStars.length-1; i >= 0; i--) {
+        const star = fallingStars[i];
+        if (magnetActive && dist(mouseX, mouseY, star.x, star.y) < 150) {
+            const angle = Math.atan2(mouseY-star.y, mouseX-star.x);
+            star.x += Math.cos(angle) * 2.5;
+            star.y += Math.sin(angle) * 2.5;
+        }
+        star.y += star.speed;
+        star.twinkle += 0.08;
+        if (star.y > GROUND_Y - 5) {
+            fallingStars.splice(i, 1);
+        }
+    }
+
+    for (let i = particles.length-1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.04;
+        p.life++;
+        if (p.life >= p.maxLife) particles.splice(i, 1);
+    }
+
+    for (let i = floatingTexts.length-1; i >= 0; i--) {
+        floatingTexts[i].y -= 0.7;
+        floatingTexts[i].life--;
+        if (floatingTexts[i].life <= 0) floatingTexts.splice(i, 1);
+    }
+
+    for (const f of flowers) f.phase += 0.03;
+
+    if (autoCollectLvl > 0 && fallingStars.length > 0) {
+    const interval = Math.max(60, 300 - autoCollectLvl * 40);
+    if (frameCount % interval === 0) {
+        const target = fallingStars[Math.floor(Math.random() * fallingStars.length)];
+        if (target) catchStar(target);
+    }
+}
+
+    updateUI();
+    saveGame();
+}
+
+function updateUI() {
+    document.getElementById('coinDisplay').textContent = `💰 ${coins}`;
+    document.getElementById('waveDisplay').textContent = `🌊 ${wave}`;
+    document.getElementById('seedDisplay').textContent = `🌱 ${seeds}`;
+}
+
+// ============ ОТРИСОВКА ============
+const skyGradients = {
+    default: ['#05051a', '#0d0d2b', '#111838'],
+    night: ['#000011', '#000022', '#0a0a2a'],
+    aurora: ['#0a1a2a', '#0a2a1a', '#1a2a3a'],
+    sunset: ['#2a0a0a', '#3a1a0a', '#1a0a0a']
+};
+
+function draw() {
+    ctx.clearRect(0, 0, W, H);
+    
+    const skyCols = skyGradients[skySkin] || skyGradients.default;
+    const skyGrad = ctx.createLinearGradient(0, 0, 0, GROUND_Y);
+    skyGrad.addColorStop(0, skyCols[0]);
+    skyGrad.addColorStop(0.6, skyCols[1]);
+    skyGrad.addColorStop(1, skyCols[2]);
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, W, GROUND_Y);
+
+    if (!draw._stars) {
+        draw._stars = [];
+        for (let i=0; i<60; i++) {
+            draw._stars.push({
+                x: random(0,W), y: random(0,GROUND_Y*0.85),
+                size: random(0.5,2.2), b: random(0.2,0.7),
+                f: random(0.01,0.04), p: random(0,Math.PI*2)
+            });
+        }
+    }
+    for (const s of draw._stars) {
+        const a = s.b + Math.sin(frameCount*s.f+s.p)*0.25;
+        ctx.fillStyle = `rgba(220,220,255,${Math.max(0.05, a)})`;
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI*2); ctx.fill();
+    }
+
+    ctx.save(); ctx.translate(W*0.85, GROUND_Y*0.25);
+    ctx.fillStyle = '#fffde8'; ctx.beginPath(); ctx.arc(0, 0, 25, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = skyCols[0]; ctx.beginPath(); ctx.arc(10, -4, 20, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+
+    const groundColors = {
+        green:  '#1a2e1a',
+        pink:   '#2e1a2a',
+        gold:   '#2e2a1a',
+        snow:   '#c8d8e0',
+        lava:   '#3a1a0a',
+        night:  '#0a0a14'
+    };
+    ctx.fillStyle = groundColors[groundSkin] || groundColors.green;
+    ctx.fillRect(0, GROUND_Y, W, H-GROUND_Y);
+
+    for (const f of flowers) {
+        ctx.save(); ctx.translate(f.x, f.y);
+        const pulse = 1 + Math.sin(f.phase*1.7)*0.12;
+        const sz = f.size * pulse;
+        ctx.fillStyle = `hsla(${f.hue}, 80%, 65%, 0.9)`;
+        for (let i=0; i<f.petalCount; i++) {
+            const angle = (i/f.petalCount)*Math.PI*2 + f.phase*0.3;
+            ctx.save(); ctx.rotate(angle);
+            ctx.beginPath(); ctx.ellipse(sz*0.35, 0, sz*0.35, sz*0.25, 0, 0, Math.PI*2); ctx.fill();
+            ctx.restore();
+        }
+        ctx.fillStyle = '#ffffcc';
+        ctx.beginPath(); ctx.arc(0, 0, sz*0.2, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
+    }
+
+    for (const star of fallingStars) {
+        ctx.save(); ctx.translate(star.x, star.y);
+        const s = star.size;
+        ctx.fillStyle = `hsla(${star.hue}, 100%, 80%, 0.9)`;
+        ctx.shadowColor = `hsla(${star.hue}, 100%, 70%, 0.6)`;
+        ctx.shadowBlur = s * 1.5;
+        
+        switch(starSkin) {
+            case 'star5':
+                const step = Math.PI/5, rot = Math.PI/2*3;
+                ctx.beginPath();
+                for (let i=0; i<5; i++) {
+                    ctx.lineTo(Math.cos(rot)*s, Math.sin(rot)*s);
+                    rot += step;
+                    ctx.lineTo(Math.cos(rot)*s*0.5, Math.sin(rot)*s*0.5);
+                    rot += step;
+                }
+                ctx.closePath(); ctx.fill();
+                break;
+            case 'star4':
+                ctx.beginPath();
+                for (let i=0; i<8; i++) {
+                    const a = i*Math.PI/4;
+                    const r = i%2===0 ? s : s*0.4;
+                    ctx.lineTo(Math.cos(a)*r, Math.sin(a)*r);
+                }
+                ctx.closePath(); ctx.fill();
+                break;
+            case 'circle':
+                ctx.beginPath(); ctx.arc(0, 0, s*0.9, 0, Math.PI*2); ctx.fill();
+                break;
+            case 'diamond':
+                ctx.beginPath(); ctx.moveTo(0,-s); ctx.lineTo(s,0); ctx.lineTo(0,s); ctx.lineTo(-s,0); ctx.closePath(); ctx.fill();
+                break;
+            case 'cat':
+                ctx.beginPath(); ctx.arc(0, 0, s*0.8, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = '#fff';
+                ctx.beginPath(); ctx.arc(-s*0.3, -s*0.4, s*0.2, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(s*0.3, -s*0.4, s*0.2, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = '#ffaaaa';
+                ctx.beginPath(); ctx.arc(0, s*0.2, s*0.1, 0, Math.PI); ctx.fill();
+                break;
+            case 'pixel':
+                const ps = s * 0.7;
+                ctx.fillRect(-ps, -ps, ps*2, ps*2);
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(-ps*0.3, -ps*0.3, ps*0.6, ps*0.6);
+                break;
+            case 'moon':
+                ctx.beginPath(); ctx.arc(0, 0, s, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = skyCols[0];
+                ctx.beginPath(); ctx.arc(s*0.3, -s*0.2, s*0.8, 0, Math.PI*2); ctx.fill();
+                break;
+            case 'bee':
+                ctx.fillStyle = '#ffdd00';
+                ctx.beginPath(); ctx.ellipse(0, 0, s*0.8, s*0.5, 0, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = '#000';
+                ctx.fillRect(-s*0.1, -s*0.5, s*0.2, s);
+                ctx.fillRect(-s*0.5, -s*0.5, s*0.2, s);
+                break;
+            case 'triangle':
+                ctx.beginPath();
+                ctx.moveTo(0, -s);
+                ctx.lineTo(s * 0.8, s * 0.6);
+                ctx.lineTo(-s * 0.8, s * 0.6);
+                ctx.closePath();
+                ctx.fill();
+                break;
+            case 'square':
+                ctx.fillRect(-s * 0.8, -s * 0.8, s * 1.6, s * 1.6);
+                break;
+            case 'dog':
+                ctx.beginPath(); ctx.arc(0, 0, s * 0.8, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#fff';
+                ctx.beginPath(); ctx.arc(-s * 0.4, -s * 0.5, s * 0.15, 0, Math.PI * 2); ctx.fill();
+                ctx.beginPath(); ctx.arc(s * 0.4, -s * 0.5, s * 0.15, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#000';
+                ctx.beginPath(); ctx.arc(0, s * 0.1, s * 0.15, 0, Math.PI); ctx.fill();
+                break;
+            case 'hamster':
+                ctx.beginPath(); ctx.ellipse(0, 0, s * 0.9, s * 0.7, 0, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#fff';
+                ctx.beginPath(); ctx.arc(-s * 0.25, -s * 0.3, s * 0.15, 0, Math.PI * 2); ctx.fill();
+                ctx.beginPath(); ctx.arc(s * 0.25, -s * 0.3, s * 0.15, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#ffb6c1';
+                ctx.beginPath(); ctx.arc(0, s * 0.3, s * 0.12, 0, Math.PI); ctx.fill();
+                break;
+            case 'oval':
+                ctx.beginPath(); ctx.ellipse(0, 0, s * 0.9, s * 0.5, 0, 0, Math.PI * 2); ctx.fill();
+                break;
+            case 'semicircle':
+                ctx.beginPath(); ctx.arc(0, 0, s, 0, Math.PI); ctx.closePath(); ctx.fill();
+                break;
+            case 'rectangle':
+                ctx.fillRect(-s * 1.1, -s * 0.6, s * 2.2, s * 1.2);
+                break;
+            case 'goldbar':
+                ctx.fillStyle = '#ffd700';
+                ctx.fillRect(-s * 0.9, -s * 0.5, s * 1.8, s * 1.0);
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(-s * 0.7, -s * 0.2, s * 1.4, s * 0.2);
+                break;
+            case 'sunflower':
+                ctx.fillStyle = '#ffaa00';
+                ctx.beginPath(); ctx.arc(0, 0, s * 0.7, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#8B4513';
+                ctx.beginPath(); ctx.arc(0, 0, s * 0.3, 0, Math.PI * 2); ctx.fill();
+                for (let i = 0; i < 8; i++) {
+                    const a = i * Math.PI / 4;
+                    ctx.fillStyle = '#ffdd00';
+                    ctx.beginPath();
+                    ctx.ellipse(Math.cos(a) * s * 0.5, Math.sin(a) * s * 0.5, s * 0.25, s * 0.1, a, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                break;
+            case 'egg':
+                ctx.fillStyle = '#fefae0';
+                ctx.beginPath(); ctx.ellipse(0, -s * 0.1, s * 0.6, s * 0.75, 0, 0, Math.PI * 2); ctx.fill();
+                break;
+            case 'chick':
+                ctx.fillStyle = '#ffd700';
+                ctx.beginPath(); ctx.arc(0, 0, s * 0.6, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#ff9900';
+                ctx.beginPath(); ctx.moveTo(0, -s * 0.5); ctx.lineTo(-s * 0.2, -s * 0.7); ctx.lineTo(s * 0.2, -s * 0.7); ctx.closePath(); ctx.fill();
+                ctx.fillStyle = '#000';
+                ctx.beginPath(); ctx.arc(-s * 0.15, -s * 0.1, s * 0.08, 0, Math.PI * 2); ctx.fill();
+                ctx.beginPath(); ctx.arc(s * 0.15, -s * 0.1, s * 0.08, 0, Math.PI * 2); ctx.fill();
+                break;
+            case 'leaf':
+                ctx.fillStyle = '#4caf50';
+                ctx.beginPath(); ctx.ellipse(0, 0, s * 0.7, s * 0.35, 0, 0, Math.PI * 2); ctx.fill();
+                ctx.strokeStyle = '#2e7d32';
+                ctx.lineWidth = 1;
+                ctx.beginPath(); ctx.moveTo(-s * 0.6, 0); ctx.lineTo(s * 0.6, 0); ctx.stroke();
+                break;
+            case 'tree':
+                ctx.fillStyle = '#228B22';
+                ctx.beginPath(); ctx.moveTo(0, -s * 0.8); ctx.lineTo(-s * 0.6, 0); ctx.lineTo(s * 0.6, 0); ctx.closePath(); ctx.fill();
+                ctx.fillStyle = '#8B4513';
+                ctx.fillRect(-s * 0.1, 0, s * 0.2, s * 0.4);
+                break;
+            case 'stick':
+                ctx.fillStyle = '#8B4513';
+                ctx.fillRect(-s * 0.15, -s * 0.7, s * 0.3, s * 1.4);
+                break;
+            default:
+                ctx.beginPath();
+                for (let i=0; i<8; i++) {
+                    const a = i*Math.PI/4;
+                    const r = i%2===0 ? s : s*0.4;
+                    ctx.lineTo(Math.cos(a)*r, Math.sin(a)*r);
+                }
+                ctx.closePath(); ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+        
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 9px "Segoe UI"';
+        ctx.textAlign = 'center';
+        
+        if (star.type.doubleClick && star.clicksRemaining > 0) {
+            ctx.fillText(`${star.value} (${star.clicksRemaining})`, 0, -s-4);
+        } else {
+            ctx.fillText(star.value, 0, -s-4);
+        }
+        ctx.restore();
+    }
+
+    for (const p of particles) {
+        const alpha = 1 - p.life/p.maxLife;
+        ctx.fillStyle = `hsla(${p.hue}, 100%, 80%, ${alpha})`;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size*alpha, 0, Math.PI*2); ctx.fill();
+    }
+
+    for (const ft of floatingTexts) {
+        ctx.globalAlpha = Math.min(1, ft.life/20);
+        ctx.fillStyle = ft.color || '#ffd700';
+        ctx.font = 'bold 13px "Segoe UI"';
+        ctx.textAlign = 'center';
+        ctx.fillText(ft.text, ft.x, ft.y);
+        ctx.globalAlpha = 1;
+    }
+}
+
+function gameLoop() {
+    if (gameRunning) update();
+    draw();
+    requestAnimationFrame(gameLoop);
+}
+
+// Гарантированный запуск
+gameRunning = false;
+setTimeout(() => {
+    if (!gameRunning) {
+        gameRunning = true;
+        lastTime = Date.now();
+    }
+}, 100);
+
+// ============ СОХРАНЕНИЕ ============
+function saveGame() {
+    const save = {
+        coins, totalCaught, wave, seeds,
+        permMultLvl, luckLvl, slowPermLvl,
+        catchRadiusLvl, starSizeLvl,
+        autoCollectLvl, seedCapLvl, autoPlantLvl,
+        starSkin, ownedStarSkins,
+        groundSkin, ownedGroundSkins, skySkin,
+        starCaughtCounts, seedsPlanted, playTime
+    };
+    localStorage.setItem('starGardenSave', JSON.stringify(save));
+    
+    const tops = JSON.parse(localStorage.getItem('starGardenTops') || '{"coins":[],"time":[],"caught":[],"seeds":[]}');
+    const entry = { name: playerName, value: coins, time: playTime, caught: totalCaught, seeds: seedsPlanted };
+    tops.coins.push(entry);
+    tops.time.push(entry);
+    tops.caught.push(entry);
+    tops.seeds.push(entry);
+    tops.coins.sort((a,b) => b.value - a.value).splice(10);
+    tops.time.sort((a,b) => b.time - a.time).splice(10);
+    tops.caught.sort((a,b) => b.caught - a.caught).splice(10);
+    tops.seeds.sort((a,b) => b.seeds - a.seeds).splice(10);
+    localStorage.setItem('starGardenTops', JSON.stringify(tops));
+}
+
+function loadGame() {
+    const raw = localStorage.getItem('starGardenSave');
+    if (!raw) return;
+    try {
+        const save = JSON.parse(raw);
+        coins = save.coins || 0;
+        totalCaught = save.totalCaught || 0;
+        wave = save.wave || 1;
+        seeds = Math.min(save.seeds || 0, getMaxSeeds());
+        permMultLvl = save.permMultLvl || 1;
+        luckLvl = save.luckLvl || 0;
+        slowPermLvl = save.slowPermLvl || 0;
+        catchRadiusLvl = save.catchRadiusLvl || 0;
+        starSizeLvl = save.starSizeLvl || 0;
+        autoCollectLvl = save.autoCollectLvl || 0;
+        seedCapLvl = save.seedCapLvl || 1;
+        autoPlantLvl = save.autoPlantLvl || 0;
+        starSkin = save.starSkin || 'default';
+        ownedStarSkins = save.ownedStarSkins || ['default'];
+        groundSkin = save.groundSkin || 'green';
+        ownedGroundSkins = save.ownedGroundSkins || ['green'];
+        skySkin = save.skySkin || 'default';
+        starCaughtCounts = save.starCaughtCounts || {};
+        seedsPlanted = save.seedsPlanted || 0;
+        playTime = save.playTime || 0;
+    } catch(e) {}
+    updateUI();
+}
+
+// ============ МАГАЗИН ============
+function renderShop(tab) {
+    const c = document.getElementById('shopContent');
+    let html = '';
+    
+    if (tab === 'temp') {
+        html += `<div class="shop-item"><span>💥 x2 монет (10с)</span><span>💰 ${tempPrices.x2}</span><button id="buyTempX2">${t('buy')}</button></div>`;
+        html += `<div class="shop-item"><span>🐌 Замедление (5с)</span><span>💰 ${tempPrices.slow}</span><button id="buySlow">${t('buy')}</button></div>`;
+        html += `<div class="shop-item"><span>🧲 Магнит (8с)</span><span>💰 ${tempPrices.magnet}</span><button id="buyMagnet">${t('buy')}</button></div>`;
+        html += `<div class="shop-item"><span>💣 Собрать все</span><span>💰 ${tempPrices.collectAll}</span><button id="buyCollectAll">${t('buy')}</button></div>`;
+} else if (tab === 'perm') {
+    const multCost = Math.floor(150 * Math.pow(1.6, permMultLvl - 1));
+    html += `<div class="shop-item"><span>🔮 Множитель (ур.${permMultLvl}/20)</span><span>💰 ${permMultLvl >= 20 ? t('max') : multCost}</span><button id="buyPermMult" ${permMultLvl >= 20 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+
+    const luckCost = Math.floor(100 * Math.pow(1.7, luckLvl));
+    html += `<div class="shop-item"><span>🍀 Удача (ур.${luckLvl}/10)</span><span>💰 ${luckLvl >= 10 ? t('max') : luckCost}</span><button id="buyLuck" ${luckLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+
+    const slowCost = Math.floor(80 * Math.pow(1.7, slowPermLvl));
+    html += `<div class="shop-item"><span>🐌 Замедление (ур.${slowPermLvl}/10)</span><span>💰 ${slowPermLvl >= 10 ? t('max') : slowCost}</span><button id="buySlowPerm" ${slowPermLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+
+    const cursorCost = Math.floor(90 * Math.pow(1.7, catchRadiusLvl));
+    html += `<div class="shop-item"><span>🎯 Радиус (ур.${catchRadiusLvl}/10)</span><span>💰 ${catchRadiusLvl >= 10 ? t('max') : cursorCost}</span><button id="buyCursor" ${catchRadiusLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+
+    const sizeCost = Math.floor(70 * Math.pow(1.7, starSizeLvl));
+    html += `<div class="shop-item"><span>⭐ Размер звёзд (ур.${starSizeLvl}/10)</span><span>💰 ${starSizeLvl >= 10 ? t('max') : sizeCost}</span><button id="buyStarSize" ${starSizeLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+
+    const autoCost = Math.floor(500 * Math.pow(2.0, autoCollectLvl));
+    html += `<div class="shop-item"><span>🤖 Автосбор (ур.${autoCollectLvl}/5)</span><span>💰 ${autoCollectLvl >= 5 ? t('max') : autoCost}</span><button id="buyAuto" ${autoCollectLvl >= 5 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+
+    const seedCapCost = Math.floor(200 * Math.pow(1.8, seedCapLvl - 1));
+    html += `<div class="shop-item"><span>🌱 Вместимость семян (ур.${seedCapLvl}/10)</span><span>💰 ${seedCapLvl >= 10 ? t('max') : seedCapCost}</span><button id="buySeedCap" ${seedCapLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+
+    const autoPlantCost = Math.floor(80 * Math.pow(1.7, autoPlantLvl));
+    html += `<div class="shop-item"><span>🤖 Авто-посадка (ур.${autoPlantLvl}/20)</span><span>💰 ${autoPlantLvl >= 20 ? t('max') : autoPlantCost}</span><button id="buyAutoPlant" ${autoPlantLvl >= 20 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+} else if (tab === 'starskins') {
+        const allSkins = [
+            {id:'star4', name:'✦ Четырёхконечная', cost:300},
+            {id:'star5', name:'⭐ Пятиконечная', cost:350},
+            {id:'triangle', name:'🔺 Треугольник', cost:200},
+            {id:'diamond', name:'💎 Ромбик', cost:280},
+            {id:'square', name:'🟪 Квадрат', cost:180},
+            {id:'cat', name:'🐱 Котик', cost:500},
+            {id:'dog', name:'🐶 Собачка', cost:300},
+            {id:'hamster', name:'🐹 Хомяк', cost:300},
+            {id:'oval', name:'🥚 Овал', cost:190},
+            {id:'semicircle', name:'🌓 Полукруг', cost:170},
+            {id:'rectangle', name:'📏 Прямоугольник', cost:160},
+            {id:'goldbar', name:'💰 Слиток', cost:350},
+            {id:'circle', name:'⚪ Кружок', cost:250},
+            {id:'sunflower', name:'🌻 Подсолнух', cost:400},
+            {id:'egg', name:'🥚 Яйцо', cost:220},
+            {id:'chick', name:'🐤 Цыплёнок', cost:320},
+            {id:'leaf', name:'🍃 Листик', cost:240},
+            {id:'tree', name:'🌳 Дерево', cost:450},
+            {id:'stick', name:'🥢 Палка', cost:180},
+            {id:'pixel', name:'👾 Пиксель', cost:400},
+            {id:'moon', name:'🌙 Луна', cost:450},
+            {id:'bee', name:'🐝 Пчела', cost:380},
+        ];
+        allSkins.forEach(s => {
+            const owned = ownedStarSkins.includes(s.id);
+            html += `<div class="shop-item"><span>${s.name}</span><span>💰 ${owned?'✓':s.cost}</span>`;
+            if (!owned) html += `<button class="buySkin" data-skin="${s.id}" data-cost="${s.cost}">${t('buy')}</button>`;
+            else if (starSkin === s.id) html += `<span>✅</span>`;
+            else html += `<button class="equipSkin" data-skin="${s.id}">${t('equip')}</button>`;
+            html += `</div>`;
+        });
+    } else if (tab === 'groundskins') {
+        const grounds = [
+            {id:'green', name:'🌿 Зелёный', cost:200},
+            {id:'pink', name:'🌸 Розовый', cost:250},
+            {id:'gold', name:'✨ Золотой', cost:300},
+            {id:'snow', name:'❄️ Снежный', cost:280},
+            {id:'lava', name:'🌋 Лавовый', cost:350},
+            {id:'night', name:'🌑 Ночной', cost:220}
+        ];
+        grounds.forEach(s => {
+            const owned = ownedGroundSkins.includes(s.id);
+            html += `<div class="shop-item"><span>${s.name}</span><span>💰 ${owned?'✓':s.cost}</span>`;
+            if (!owned) html += `<button class="buyGround" data-skin="${s.id}" data-cost="${s.cost}">${t('buy')}</button>`;
+            else if (groundSkin === s.id) html += `<span>✅</span>`;
+            else html += `<button class="equipGround" data-skin="${s.id}">${t('equip')}</button>`;
+            html += `</div>`;
+        });
+    }
+    
+    c.innerHTML = html;
+    
+    setTimeout(() => {
+        document.getElementById('buyTempX2')?.addEventListener('click', () => {
+            if (coins >= tempPrices.x2) {
+                coins -= tempPrices.x2;
+                tempMult = 2;
+                tempMultTimer = 600;
+                tempCounts.x2++;
+                tempPrices.x2 = Math.floor(100 * Math.pow(1.5, tempCounts.x2));
+                sfxBuy();
+                renderShop('temp');
+            }
+        });
+        document.getElementById('buySlow')?.addEventListener('click', () => {
+            if (coins >= tempPrices.slow) {
+                coins -= tempPrices.slow;
+                slowMotion = true;
+                slowTimer = 300;
+                tempCounts.slow++;
+                tempPrices.slow = Math.floor(80 * Math.pow(1.4, tempCounts.slow));
+                sfxBuy();
+                renderShop('temp');
+            }
+        });
+        document.getElementById('buyMagnet')?.addEventListener('click', () => {
+            if (coins >= tempPrices.magnet) {
+                coins -= tempPrices.magnet;
+                magnetActive = true;
+                magnetTimer = 480;
+                tempCounts.magnet++;
+                tempPrices.magnet = Math.floor(60 * Math.pow(1.3, tempCounts.magnet));
+                sfxBuy();
+                renderShop('temp');
+            }
+        });
+        document.getElementById('buyCollectAll')?.addEventListener('click', () => {
+            if (coins >= tempPrices.collectAll && fallingStars.length > 0) {
+                coins -= tempPrices.collectAll;
+                [...fallingStars].forEach(s => catchStar(s));
+                tempCounts.collectAll++;
+                tempPrices.collectAll = Math.floor(150 * Math.pow(1.6, tempCounts.collectAll));
+                sfxBuy();
+                renderShop('temp');
+            }
+        });
+        
+        document.getElementById('buyPermMult')?.addEventListener('click', () => {
+    const cost = Math.floor(150 * Math.pow(1.6, permMultLvl - 1));
+    if (coins >= cost && permMultLvl < 20) { coins -= cost; permMultLvl++; sfxBuy(); renderShop('perm'); }
+});
+document.getElementById('buyLuck')?.addEventListener('click', () => {
+    const cost = Math.floor(100 * Math.pow(1.7, luckLvl));
+    if (coins >= cost && luckLvl < 10) { coins -= cost; luckLvl++; sfxBuy(); renderShop('perm'); }
+});
+document.getElementById('buySlowPerm')?.addEventListener('click', () => {
+    const cost = Math.floor(80 * Math.pow(1.7, slowPermLvl));
+    if (coins >= cost && slowPermLvl < 10) { coins -= cost; slowPermLvl++; sfxBuy(); renderShop('perm'); }
+});
+document.getElementById('buyCursor')?.addEventListener('click', () => {
+    const cost = Math.floor(90 * Math.pow(1.7, catchRadiusLvl));
+    if (coins >= cost && catchRadiusLvl < 10) { coins -= cost; catchRadiusLvl++; sfxBuy(); renderShop('perm'); }
+});
+document.getElementById('buyStarSize')?.addEventListener('click', () => {
+    const cost = Math.floor(70 * Math.pow(1.7, starSizeLvl));
+    if (coins >= cost && starSizeLvl < 10) { coins -= cost; starSizeLvl++; sfxBuy(); renderShop('perm'); }
+});
+document.getElementById('buyAuto')?.addEventListener('click', () => {
+    const cost = Math.floor(500 * Math.pow(2.0, autoCollectLvl));
+    if (coins >= cost && autoCollectLvl < 5) { coins -= cost; autoCollectLvl++; sfxBuy(); renderShop('perm'); }
+});
+document.getElementById('buySeedCap')?.addEventListener('click', () => {
+    const cost = Math.floor(200 * Math.pow(1.8, seedCapLvl - 1));
+    if (coins >= cost && seedCapLvl < 10) { coins -= cost; seedCapLvl++; sfxBuy(); renderShop('perm'); }
+});
+document.getElementById('buyAutoPlant')?.addEventListener('click', () => {
+    const cost = Math.floor(80 * Math.pow(1.7, autoPlantLvl));
+    if (coins >= cost && autoPlantLvl < 20) { coins -= cost; autoPlantLvl++; sfxBuy(); renderShop('perm'); }
+});
+        
+        document.querySelectorAll('.buySkin').forEach(b => b.addEventListener('click', () => {
+            const skin = b.dataset.skin;
+            const cost = parseInt(b.dataset.cost);
+            if (coins >= cost) {
+                coins -= cost;
+                ownedStarSkins.push(skin);
+                starSkin = skin;
+                sfxBuy();
+                renderShop('starskins');
+            }
+        }));
+        document.querySelectorAll('.equipSkin').forEach(b => b.addEventListener('click', () => {
+            starSkin = b.dataset.skin;
+            renderShop('starskins');
+        }));
+        
+        document.querySelectorAll('.buyGround').forEach(b => b.addEventListener('click', () => {
+            const skin = b.dataset.skin;
+            const cost = parseInt(b.dataset.cost);
+            if (coins >= cost) {
+                coins -= cost;
+                ownedGroundSkins.push(skin);
+                groundSkin = skin;
+                sfxBuy();
+                renderShop('groundskins');
+            }
+        }));
+        document.querySelectorAll('.equipGround').forEach(b => b.addEventListener('click', () => {
+            groundSkin = b.dataset.skin;
+            renderShop('groundskins');
+        }));
+    }, 50);
+}
+
+// ============ САД ============
+function openGarden() {
+    document.getElementById('gardenSeedCount').textContent = seeds;
+    document.getElementById('autoPlantLevel').textContent = autoPlantLvl;
+    updateGardenUI();
+    document.getElementById('gardenModal').classList.add('active');
+}
+
+function updateGardenUI() {
+    const statusP = document.getElementById('gardenStatus');
+    const timerP = document.getElementById('gardenTimer');
+    const plantBtn = document.getElementById('plantSeedBtn');
+    const harvestBtn = document.getElementById('harvestBtn');
+    
+    if (gardenGrowing) {
+        statusP.textContent = '🌱 Растёт...';
+        timerP.style.display = 'block';
+        document.getElementById('gardenTimeLeft').textContent = Math.ceil(gardenTimer/60);
+        plantBtn.style.display = 'none';
+        harvestBtn.style.display = 'none';
+    } else if (gardenReward) {
+        statusP.textContent = '🎁 Урожай готов!';
+        timerP.style.display = 'none';
+        plantBtn.style.display = 'none';
+        harvestBtn.style.display = 'inline-block';
+    } else {
+        statusP.textContent = 'Грядка пуста';
+        timerP.style.display = 'none';
+        plantBtn.style.display = seeds > 0 ? 'inline-block' : 'none';
+        plantBtn.disabled = seeds <= 0;
+        harvestBtn.style.display = 'none';
+    }
+}
+
+function plantSeed() {
+    if (seeds <= 0 || gardenGrowing || gardenReward) return;
+    seeds--;
+    seedsPlanted++;
+    gardenGrowing = true;
+    gardenReward = null;
+    gardenTimer = 7200;
+    updateUI();
+    updateGardenUI();
+}
+
+function harvestReady() {
+    const r = Math.random();
+    if (r < 0.35) gardenReward = { type: 'buff', buff: 'x2' };
+    else if (r < 0.65) gardenReward = { type: 'buff', buff: 'slow' };
+    else if (r < 0.85) gardenReward = { type: 'buff', buff: 'magnet' };
+    else if (r < 0.99) {
+        const allSkins = ['star4', 'star5', 'triangle', 'diamond', 'square', 'cat', 'dog', 'hamster', 'oval', 'semicircle', 'rectangle', 'goldbar', 'circle', 'sunflower', 'egg', 'chick', 'leaf', 'tree', 'stick', 'pixel', 'moon', 'bee'];
+        const avail = allSkins.filter(s => !ownedStarSkins.includes(s));
+        gardenReward = avail.length > 0 ? { type: 'skin', skin: avail[Math.floor(Math.random()*avail.length)] } : { type: 'buff', buff: 'x2' };
+    } else {
+        gardenReward = { type: 'skin', skin: 'crown' };
+    }
+    updateGardenUI();
+}
+
+function harvestPlant() {
+    if (!gardenReward) return;
+    sfxHarvest();
+    if (gardenReward.type === 'buff') {
+        switch(gardenReward.buff) {
+            case 'x2': tempMult = 2; tempMultTimer = 2700; break;
+            case 'slow': slowMotion = true; slowTimer = 2700; break;
+            case 'magnet': magnetActive = true; magnetTimer = 2700; break;
+        }
+    } else if (gardenReward.type === 'skin') {
+        if (!ownedStarSkins.includes(gardenReward.skin)) ownedStarSkins.push(gardenReward.skin);
+        starSkin = gardenReward.skin;
+    }
+    gardenReward = null;
+    gardenGrowing = false;
+    updateGardenUI();
+}
+
+// ============ СТАТИСТИКА ============
+function renderStats() {
+    const tops = JSON.parse(localStorage.getItem('starGardenTops') || '{"coins":[],"time":[],"caught":[],"seeds":[]}');
+    let html = `<p style="margin-bottom:10px;">👥 ${t('totalPlayers')} ${Math.max(tops.coins.length, tops.time.length, tops.caught.length, tops.seeds.length)}</p>`;
+    
+    html += `<p style="color:var(--gold); margin-top:10px;">${t('statCoins')}</p>`;
+    html += '<table class="stats-table"><tr><th>#</th><th>Имя</th><th>Монеты</th></tr>';
+    tops.coins.slice(0,5).forEach((e, i) => {
+        html += `<tr><td>${i+1}</td><td>${e.name}</td><td>${e.value}</td></tr>`;
+    });
+    html += '</table>';
+    
+    html += `<p style="color:var(--gold); margin-top:10px;">${t('statTime')}</p>`;
+    html += '<table class="stats-table"><tr><th>#</th><th>Имя</th><th>Секунд</th></tr>';
+    tops.time.slice(0,5).forEach((e, i) => {
+        html += `<tr><td>${i+1}</td><td>${e.name}</td><td>${e.time}</td></tr>`;
+    });
+    html += '</table>';
+    
+    html += `<p style="color:var(--gold); margin-top:10px;">${t('statCaught')}</p>`;
+    html += '<table class="stats-table"><tr><th>#</th><th>Имя</th><th>Звёзд</th></tr>';
+    tops.caught.slice(0,5).forEach((e, i) => {
+        html += `<tr><td>${i+1}</td><td>${e.name}</td><td>${e.caught}</td></tr>`;
+    });
+    html += '</table>';
+    
+    html += `<p style="color:var(--gold); margin-top:10px;">${t('statSeeds')}</p>`;
+    html += '<table class="stats-table"><tr><th>#</th><th>Имя</th><th>Семян</th></tr>';
+    tops.seeds.slice(0,5).forEach((e, i) => {
+        html += `<tr><td>${i+1}</td><td>${e.name}</td><td>${e.seeds}</td></tr>`;
+    });
+    html += '</table>';
+    
+    document.getElementById('statsContent').innerHTML = html;
+}
+
+// ============ ИНИЦИАЛИЗАЦИЯ ============
+function initShopTabs() {
+    const tabsContainer = document.getElementById('shopTabs');
+    tabsContainer.innerHTML = `
+        <button class="tab-btn active" data-tab="temp">${t('temp')}</button>
+        <button class="tab-btn" data-tab="perm">${t('perm')}</button>
+        <button class="tab-btn" data-tab="starskins">${t('starskins')}</button>
+        <button class="tab-btn" data-tab="groundskins">${t('groundskins')}</button>
+    `;
+    tabsContainer.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabsContainer.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderShop(btn.dataset.tab);
+        });
+    });
+}
+
+function updateAllTexts() {
+    document.getElementById('playBtn').textContent = t('play');
+    document.getElementById('shopMenuBtn').textContent = t('shop');
+    document.getElementById('gardenMenuBtn').textContent = t('garden');
+    document.getElementById('statsMenuBtn').textContent = t('stats');
+    document.getElementById('settingsMenuBtn').textContent = t('settings');
+    document.getElementById('tutorialMenuBtn').textContent = t('tutorial');
+    document.getElementById('backToMenuBtn').innerHTML = '🚪 ' + t('back');
+    document.getElementById('ingameShopBtn').innerHTML = '🛒';
+    document.getElementById('ingameGardenBtn').innerHTML = '🌱';
+    document.getElementById('plantSeedBtn').textContent = t('plant');
+    document.getElementById('harvestBtn').textContent = t('harvest');
+    document.getElementById('resetWaveBtn').textContent = t('resetWave');
+    document.getElementById('tutorialText').innerHTML = t('tutorialText');
+    initShopTabs();
+    updateUI();
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        currentLang = btn.dataset.lang;
+        localStorage.setItem('starGardenLang', currentLang);
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
+        updateAllTexts();
+    });
+});
+
+const savedLang = localStorage.getItem('starGardenLang');
+if (savedLang) currentLang = savedLang;
+else {
+    const navLang = navigator.language || navigator.userLanguage;
+    currentLang = navLang.startsWith('ru') ? 'ru' : 'en';
+}
+document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
+
+document.getElementById('playBtn').addEventListener('click', () => {
+    document.getElementById('mainMenu').style.display = 'none';
+    document.getElementById('gameScreen').style.display = 'flex';
+    gameRunning = true;
+    initAudio();
+    lastTime = Date.now();
+});
+
+document.getElementById('backToMenuBtn').addEventListener('click', () => {
+    gameRunning = false;
+    document.getElementById('gameScreen').style.display = 'none';
+    document.getElementById('mainMenu').style.display = 'flex';
+    saveGame();
+});
+
+document.getElementById('shopMenuBtn').addEventListener('click', () => {
+    document.getElementById('shopModal').classList.add('active');
+    initShopTabs();
+    renderShop('temp');
+});
+
+document.getElementById('ingameShopBtn').addEventListener('click', () => {
+    document.getElementById('shopModal').classList.add('active');
+    initShopTabs();
+    renderShop('temp');
+});
+
+document.getElementById('closeShop').addEventListener('click', () => {
+    document.getElementById('shopModal').classList.remove('active');
+});
+
+document.getElementById('gardenMenuBtn').addEventListener('click', openGarden);
+document.getElementById('ingameGardenBtn').addEventListener('click', openGarden);
+document.getElementById('closeGarden').addEventListener('click', () => {
+    document.getElementById('gardenModal').classList.remove('active');
+});
+document.getElementById('plantSeedBtn').addEventListener('click', plantSeed);
+document.getElementById('harvestBtn').addEventListener('click', harvestPlant);
+
+document.getElementById('settingsMenuBtn').addEventListener('click', () => {
+    document.getElementById('settingsModal').classList.add('active');
+});
+document.getElementById('closeSettings').addEventListener('click', () => {
+    document.getElementById('settingsModal').classList.remove('active');
+});
+document.getElementById('resetWaveBtn').addEventListener('click', () => {
+    wave = 1;
+    tempPrices = { x2: 100, slow: 80, magnet: 60, collectAll: 150 };
+    tempCounts = { x2: 0, slow: 0, magnet: 0, collectAll: 0 };
+    document.getElementById('settingsModal').classList.remove('active');
+});
+
+document.getElementById('statsMenuBtn').addEventListener('click', () => {
+    document.getElementById('statsModal').classList.add('active');
+    renderStats();
+});
+document.getElementById('closeStats').addEventListener('click', () => {
+    document.getElementById('statsModal').classList.remove('active');
+});
+
+document.getElementById('tutorialMenuBtn').addEventListener('click', () => {
+    document.getElementById('tutorialText').innerHTML = t('tutorialText');
+    document.getElementById('tutorialModal').classList.add('active');
+});
+document.getElementById('closeTutorial').addEventListener('click', () => {
+    document.getElementById('tutorialModal').classList.remove('active');
+});
+
+document.getElementById('themeSelect').addEventListener('change', function() {
+    document.getElementById('bodyTheme').className = this.value;
+    localStorage.setItem('starGardenTheme', this.value);
+});
+document.getElementById('fontSelect').addEventListener('change', function() {
+    document.body.style.setProperty('--font', this.value);
+    localStorage.setItem('starGardenFont', this.value);
+});
+document.getElementById('skySelect').addEventListener('change', function() {
+    skySkin = this.value;
+    localStorage.setItem('starGardenSky', this.value);
+});
+
+const savedTheme = localStorage.getItem('starGardenTheme');
+if (savedTheme) {
+    document.getElementById('bodyTheme').className = savedTheme;
+    document.getElementById('themeSelect').value = savedTheme;
+}
+const savedFont = localStorage.getItem('starGardenFont');
+if (savedFont) {
+    document.body.style.setProperty('--font', savedFont);
+    document.getElementById('fontSelect').value = savedFont;
+}
+const savedSky = localStorage.getItem('starGardenSky');
+if (savedSky) {
+    skySkin = savedSky;
+    document.getElementById('skySelect').value = savedSky;
+}
+
+canvas.addEventListener('click', e => {
+    const pos = getClickPos(e);
+    mouseX = pos.x; mouseY = pos.y;
+    handleClick(pos.x, pos.y);
+});
+canvas.addEventListener('mousemove', e => {
+    const pos = getClickPos(e);
+    mouseX = pos.x; mouseY = pos.y;
+});
+canvas.addEventListener('mouseleave', () => { mouseX = -100; mouseY = -100; });
+canvas.addEventListener('touchstart', e => {
+    e.preventDefault();
+    const pos = getClickPos(e.touches[0]);
+    mouseX = pos.x; mouseY = pos.y;
+    handleClick(pos.x, pos.y);
+}, { passive: false });
+canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const pos = getClickPos(e.touches[0]);
+    mouseX = pos.x; mouseY = pos.y;
+}, { passive: false });
+canvas.addEventListener('touchend', () => { mouseX = -100; mouseY = -100; });
+// Загрузка игры и запуск
+loadGame();
+updateAllTexts();
+updateUI();
+resizeCanvas();
+
+canvas.width = 500;
+canvas.height = 520;
+W = 500;
+H = 520;
+gameRunning = true;
+lastTime = Date.now();
+gameLoop();
+
+console.log('🌟 Star Garden v2.0.2 загружен!');
+console.log('🌐 Язык:', currentLang.toUpperCase());
+console.log('💰 Монет:', coins, '| 🌊 Волна:', wave, '| 🌱 Семян:', seeds);
+console.log('🎮 Отправляйтесь в главное меню и нажмите "Играть"!');
+</script>
+</body>
+</html>
