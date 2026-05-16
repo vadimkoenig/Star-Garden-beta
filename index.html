@@ -207,118 +207,90 @@
 // ============ ЧАСТЬ 1: ПЕРЕМЕННЫЕ, ЯЗЫКИ, ЗВУКИ, КАНВАС ============
 const LANG = {
     ru: {
-        play: '🎮 Играть', shop: '🛒 Магазин', garden: '🌱 Сад', stats: '📊 Статистика', settings: '⚙️ Настройки', tutorial: '📖 Обучение',
-        back: '🚪 Меню', coins: '💰', wave: '🌊', seeds: '🌱', buy: 'Купить', equip: 'Надеть', max: 'Макс', close: 'Закрыть',
-        temp: '⏳ Временные', perm: '🔮 Улучшения', starskins: '✨ Скины звёзд', groundskins: '🌿 Трава', skies: '🌌 Небо',
-        resetWave: '🔄 Сбросить волну', plant: 'Посадить', harvest: '🎁 Собрать',
-        tutorialText: '🌟 Кликай по падающим звёздам.<br>💰 Звёзды дают монеты (1–5000).<br>🌱 Иногда выпадают семена — сажай в Саду.<br>🎁 Урожай даёт баффы или скины.<br>🛒 В магазине: временные усиления, постоянные прокачки, скины звёзд и травы.<br>🔮 Волна растёт, можно сбросить.',
-        totalPlayers: 'Всего игроков: ',
-        statCoins: '🏆 Топ по монетам', statTime: '⏱ Топ по времени', statCaught: '⭐ Топ пойманных', statSeeds: '🌱 Топ семян',
-        gardenEmpty: 'Грядка пуста',
-        gardenGrowing: 'Растёт...',
-        gardenReady: 'Урожай готов!',
-        gardenAutoPlant: '🤖 Авто-посадка: ур.',
-        seconds: 'сек.',
-        seedsLabel: 'Семена:',
-        harvestLabel: 'Собрать урожай',
-        themeLabel: 'Тема',
-        fontLabel: 'Шрифт',
-        skyLabel: 'Небо',
-        langLabel: 'Язык',
-        themeSpace: 'Космос',
-        themeLight: 'Светлая',
-        themeForest: 'Лесная',
-        themeSunset: 'Закат',
-        skySpace: 'Космос',
-        skyNight: 'Ночь',
-        skyAurora: 'Аврора',
-        skySunset: 'Закат',
-        langRu: 'Русский',
-        langEn: 'English',
-        langEs: 'Español',
-        shopTitle: '🛒 Магазин',
-        gardenTitle: '🌱 Сад',
-        settingsTitle: '⚙️ Настройки',
-        statsTitle: '📊 Статистика',
-        tutorialTitle: '📖 Обучение',
-        understood: 'Понятно',
+        play:'🎮 Играть', shop:'🛒 Магазин', garden:'🌱 Сад', stats:'📊 Статистика', settings:'⚙️ Настройки', tutorial:'📖 Обучение',
+        back:'🚪 Меню', coins:'💰', wave:'🌊', seeds:'🌱', buy:'Купить', equip:'Надеть', max:'Макс', close:'Закрыть',
+        temp:'⏳ Временные', perm:'🔮 Улучшения', starskins:'✨ Скины звёзд', groundskins:'🌿 Трава', skies:'🌌 Небо',
+        resetWave:'🔄 Сбросить волну', plant:'Посадить', harvest:'🎁 Собрать',
+        tutorialText:'🌟 Кликай по падающим звёздам.<br>💰 Звёзды дают монеты (1–5000).<br>💥 Красная звезда взрывает соседей (+50% их стоимости).<br>⭐ Nova — сверхбыстрая и редкая (100 000 монет).<br>🌱 Иногда выпадают семена — сажай в Саду.<br>🎁 Урожай даёт баффы или скины.<br>🛒 В магазине: временные усиления, постоянные прокачки, скины звёзд и травы.<br>🔮 Волна растёт, можно сбросить.',
+        totalPlayers:'Всего игроков: ',
+        statCoins:'🏆 Топ по монетам', statTime:'⏱ Топ по времени', statCaught:'⭐ Топ пойманных', statSeeds:'🌱 Топ семян',
+        gardenEmpty:'Грядка пуста', gardenGrowing:'Растёт...', gardenReady:'Урожай готов!', gardenAutoPlant:'🤖 Авто-посадка: ур.', seconds:'сек.',
+        seedsLabel:'Семена:', harvestLabel:'Собрать урожай',
+        themeLabel:'Тема', fontLabel:'Шрифт', skyLabel:'Небо', langLabel:'Язык',
+        themeSpace:'Космос', themeLight:'Светлая', themeForest:'Лесная', themeSunset:'Закат',
+        skySpace:'Космос', skyNight:'Ночь', skyAurora:'Аврора', skySunset:'Закат',
+        langRu:'Русский', langEn:'English', langEs:'Español',
+        shopTitle:'🛒 Магазин', gardenTitle:'🌱 Сад', settingsTitle:'⚙️ Настройки', statsTitle:'📊 Статистика', tutorialTitle:'📖 Обучение',
+        understood:'Понятно',
+        skinStar4:'✦ Четырёхконечная', skinStar5:'⭐ Пятиконечная', skinTriangle:'🔺 Треугольник', skinDiamond:'💎 Ромбик',
+        skinSquare:'🟪 Квадрат', skinCat:'🐱 Котик', skinDog:'🐶 Собачка', skinHamster:'🐹 Хомяк',
+        skinOval:'🥚 Овал', skinSemicircle:'🌓 Полукруг', skinRectangle:'📏 Прямоугольник', skinGoldbar:'💰 Слиток',
+        skinCircle:'⚪ Кружок', skinSunflower:'🌻 Подсолнух', skinEgg:'🥚 Яйцо', skinChick:'🐤 Цыплёнок',
+        skinLeaf:'🍃 Листик', skinTree:'🌳 Дерево', skinStick:'🥢 Палка', skinPixel:'👾 Пиксель',
+        skinMoon:'🌙 Луна', skinBee:'🐝 Пчела',
+        groundGreen:'🌿 Зелёный', groundPink:'🌸 Розовый', groundGold:'✨ Золотой', groundSnow:'❄️ Снежный',
+        groundLava:'🌋 Лавовый', groundNight:'🌑 Ночной',
+        upgradeMult:'🔮 Множитель', upgradeLuck:'🍀 Удача', upgradeSlow:'🐌 Замедление', upgradeCursor:'🎯 Радиус',
+        upgradeStarSize:'⭐ Размер звёзд', upgradeAuto:'🤖 Автосбор', upgradeSeedCap:'🌱 Вместимость семян', upgradeAutoPlant:'🤖 Авто-посадка',
+        tempX2:'💥 x2 монет (10с)', tempSlow:'🐌 Замедление (5с)', tempMagnet:'🧲 Магнит (8с)', tempCollectAll:'💣 Собрать все',
     },
     en: {
-        play: '🎮 Play', shop: '🛒 Shop', garden: '🌱 Garden', stats: '📊 Stats', settings: '⚙️ Settings', tutorial: '📖 Tutorial',
-        back: '🚪 Menu', coins: '💰', wave: '🌊', seeds: '🌱', buy: 'Buy', equip: 'Equip', max: 'Max', close: 'Close',
-        temp: '⏳ Temporary', perm: '🔮 Upgrades', starskins: '✨ Star Skins', groundskins: '🌿 Ground', skies: '🌌 Sky',
-        resetWave: '🔄 Reset Wave', plant: 'Plant', harvest: '🎁 Harvest',
-        tutorialText: '🌟 Click falling stars.<br>💰 Stars give coins (1-5000).<br>🌱 Seeds drop sometimes — plant in Garden.<br>🎁 Harvest gives buffs or skins.<br>🛒 Shop: temp boosts, permanent upgrades, star & ground skins.<br>🔮 Wave grows, can be reset.',
-        totalPlayers: 'Total players: ',
-        statCoins: '🏆 Top Coins', statTime: '⏱ Top Time', statCaught: '⭐ Top Caught', statSeeds: '🌱 Top Seeds',
-        gardenEmpty: 'Garden bed is empty',
-        gardenGrowing: 'Growing...',
-        gardenReady: 'Harvest ready!',
-        gardenAutoPlant: 'Auto-plant: lvl',
-        seconds: 'sec.',
-        seedsLabel: 'Seeds:',
-        harvestLabel: 'Harvest',
-        themeLabel: 'Theme',
-        fontLabel: 'Font',
-        skyLabel: 'Sky',
-        langLabel: 'Language',
-        themeSpace: 'Space',
-        themeLight: 'Light',
-        themeForest: 'Forest',
-        themeSunset: 'Sunset',
-        skySpace: 'Space',
-        skyNight: 'Night',
-        skyAurora: 'Aurora',
-        skySunset: 'Sunset',
-        langRu: 'Русский',
-        langEn: 'English',
-        langEs: 'Español',
-        shopTitle: '🛒 Shop',
-        gardenTitle: '🌱 Garden',
-        settingsTitle: '⚙️ Settings',
-        statsTitle: '📊 Stats',
-        tutorialTitle: '📖 Tutorial',
-        understood: 'Got it',
+        play:'🎮 Play', shop:'🛒 Shop', garden:'🌱 Garden', stats:'📊 Stats', settings:'⚙️ Settings', tutorial:'📖 Tutorial',
+        back:'🚪 Menu', coins:'💰', wave:'🌊', seeds:'🌱', buy:'Buy', equip:'Equip', max:'Max', close:'Close',
+        temp:'⏳ Temporary', perm:'🔮 Upgrades', starskins:'✨ Star Skins', groundskins:'🌿 Ground', skies:'🌌 Sky',
+        resetWave:'🔄 Reset Wave', plant:'Plant', harvest:'🎁 Harvest',
+        tutorialText:'🌟 Click falling stars.<br>💰 Stars give coins (1-5000).<br>💥 Red star explodes neighbors (+50% value).<br>⭐ Nova — super fast & rare (100,000 coins).<br>🌱 Seeds drop — plant in Garden.<br>🎁 Harvest gives buffs or skins.<br>🛒 Shop: temp boosts, perm upgrades, skins.<br>🔮 Wave grows, can be reset.',
+        totalPlayers:'Total players: ',
+        statCoins:'🏆 Top Coins', statTime:'⏱ Top Time', statCaught:'⭐ Top Caught', statSeeds:'🌱 Top Seeds',
+        gardenEmpty:'Garden bed empty', gardenGrowing:'Growing...', gardenReady:'Harvest ready!', gardenAutoPlant:'Auto-plant: lvl', seconds:'sec.',
+        seedsLabel:'Seeds:', harvestLabel:'Harvest',
+        themeLabel:'Theme', fontLabel:'Font', skyLabel:'Sky', langLabel:'Language',
+        themeSpace:'Space', themeLight:'Light', themeForest:'Forest', themeSunset:'Sunset',
+        skySpace:'Space', skyNight:'Night', skyAurora:'Aurora', skySunset:'Sunset',
+        langRu:'Русский', langEn:'English', langEs:'Español',
+        shopTitle:'🛒 Shop', gardenTitle:'🌱 Garden', settingsTitle:'⚙️ Settings', statsTitle:'📊 Stats', tutorialTitle:'📖 Tutorial',
+        understood:'Got it',
+        skinStar4:'✦ Four-pointed', skinStar5:'⭐ Five-pointed', skinTriangle:'🔺 Triangle', skinDiamond:'💎 Diamond',
+        skinSquare:'🟪 Square', skinCat:'🐱 Cat', skinDog:'🐶 Dog', skinHamster:'🐹 Hamster',
+        skinOval:'🥚 Oval', skinSemicircle:'🌓 Semicircle', skinRectangle:'📏 Rectangle', skinGoldbar:'💰 Gold Bar',
+        skinCircle:'⚪ Circle', skinSunflower:'🌻 Sunflower', skinEgg:'🥚 Egg', skinChick:'🐤 Chick',
+        skinLeaf:'🍃 Leaf', skinTree:'🌳 Tree', skinStick:'🥢 Stick', skinPixel:'👾 Pixel',
+        skinMoon:'🌙 Moon', skinBee:'🐝 Bee',
+        groundGreen:'🌿 Green', groundPink:'🌸 Pink', groundGold:'✨ Gold', groundSnow:'❄️ Snow',
+        groundLava:'🌋 Lava', groundNight:'🌑 Night',
+        upgradeMult:'🔮 Multiplier', upgradeLuck:'🍀 Luck', upgradeSlow:'🐌 Slow', upgradeCursor:'🎯 Cursor',
+        upgradeStarSize:'⭐ Star Size', upgradeAuto:'🤖 Auto-collect', upgradeSeedCap:'🌱 Seed Capacity', upgradeAutoPlant:'🤖 Auto-plant',
+        tempX2:'💥 x2 Coins (10s)', tempSlow:'🐌 Slow (5s)', tempMagnet:'🧲 Magnet (8s)', tempCollectAll:'💣 Collect All',
     },
     es: {
-        play: '🎮 Jugar', shop: '🛒 Tienda', garden: '🌱 Jardín', stats: '📊 Estadísticas', settings: '⚙️ Ajustes', tutorial: '📖 Tutorial',
-        back: '🚪 Menú', coins: '💰', wave: '🌊', seeds: '🌱', buy: 'Comprar', equip: 'Equipar', max: 'Máx', close: 'Cerrar',
-        temp: '⏳ Temporal', perm: '🔮 Mejoras', starskins: '✨ Skins Estrella', groundskins: '🌿 Suelo', skies: '🌌 Cielo',
-        resetWave: '🔄 Reiniciar Ola', plant: 'Plantar', harvest: '🎁 Cosechar',
-        tutorialText: '🌟 Haz clic en las estrellas que caen.<br>💰 Las estrellas dan monedas (1-5000).<br>🌱 A veces caen semillas — plántalas en el Jardín.<br>🎁 La cosecha da mejoras o skins.<br>🛒 Tienda: mejoras temporales, mejoras permanentes, skins de estrellas y suelo.<br>🔮 La ola crece, se puede reiniciar.',
-        totalPlayers: 'Jugadores totales: ',
-        statCoins: '🏆 Top Monedas', statTime: '⏱ Top Tiempo', statCaught: '⭐ Top Atrapadas', statSeeds: '🌱 Top Semillas',
-        gardenEmpty: 'El jardín está vacío',
-        gardenGrowing: 'Creciendo...',
-        gardenReady: '¡Cosecha lista!',
-        gardenAutoPlant: 'Auto-plantar: niv.',
-        seconds: 'seg.',
-        seedsLabel: 'Semillas:',
-        harvestLabel: 'Cosechar',
-        themeLabel: 'Tema',
-        fontLabel: 'Fuente',
-        skyLabel: 'Cielo',
-        langLabel: 'Idioma',
-        themeSpace: 'Espacio',
-        themeLight: 'Claro',
-        themeForest: 'Bosque',
-        themeSunset: 'Atardecer',
-        skySpace: 'Espacio',
-        skyNight: 'Noche',
-        skyAurora: 'Aurora',
-        skySunset: 'Atardecer',
-        langRu: 'Русский',
-        langEn: 'English',
-        langEs: 'Español',
-        shopTitle: '🛒 Tienda',
-        gardenTitle: '🌱 Jardín',
-        settingsTitle: '⚙️ Ajustes',
-        statsTitle: '📊 Estadísticas',
-        tutorialTitle: '📖 Tutorial',
-        understood: 'Entendido',
+        play:'🎮 Jugar', shop:'🛒 Tienda', garden:'🌱 Jardín', stats:'📊 Estadísticas', settings:'⚙️ Ajustes', tutorial:'📖 Tutorial',
+        back:'🚪 Menú', coins:'💰', wave:'🌊', seeds:'🌱', buy:'Comprar', equip:'Equipar', max:'Máx', close:'Cerrar',
+        temp:'⏳ Temporal', perm:'🔮 Mejoras', starskins:'✨ Skins Estrella', groundskins:'🌿 Suelo', skies:'🌌 Cielo',
+        resetWave:'🔄 Reiniciar Ola', plant:'Plantar', harvest:'🎁 Cosechar',
+        tutorialText:'🌟 Haz clic en estrellas.<br>💰 Monedas (1-5000).<br>💥 Estrella roja explota vecinas (+50%).<br>⭐ Nova — súper rápida (100,000).<br>🌱 Semillas — planta en Jardín.<br>🎁 Cosecha da mejoras o skins.<br>🛒 Tienda: mejoras, skins.<br>🔮 La ola crece.',
+        totalPlayers:'Jugadores: ',
+        statCoins:'🏆 Top Monedas', statTime:'⏱ Top Tiempo', statCaught:'⭐ Top Atrapadas', statSeeds:'🌱 Top Semillas',
+        gardenEmpty:'Jardín vacío', gardenGrowing:'Creciendo...', gardenReady:'¡Cosecha lista!', gardenAutoPlant:'Auto-plantar: niv.', seconds:'seg.',
+        seedsLabel:'Semillas:', harvestLabel:'Cosechar',
+        themeLabel:'Tema', fontLabel:'Fuente', skyLabel:'Cielo', langLabel:'Idioma',
+        themeSpace:'Espacio', themeLight:'Claro', themeForest:'Bosque', themeSunset:'Atardecer',
+        skySpace:'Espacio', skyNight:'Noche', skyAurora:'Aurora', skySunset:'Atardecer',
+        langRu:'Русский', langEn:'English', langEs:'Español',
+        shopTitle:'🛒 Tienda', gardenTitle:'🌱 Jardín', settingsTitle:'⚙️ Ajustes', statsTitle:'📊 Estadísticas', tutorialTitle:'📖 Tutorial',
+        understood:'Entendido',
+        skinStar4:'✦ Cuatro puntas', skinStar5:'⭐ Cinco puntas', skinTriangle:'🔺 Triángulo', skinDiamond:'💎 Diamante',
+        skinSquare:'🟪 Cuadrado', skinCat:'🐱 Gato', skinDog:'🐶 Perro', skinHamster:'🐹 Hámster',
+        skinOval:'🥚 Óvalo', skinSemicircle:'🌓 Semicírculo', skinRectangle:'📏 Rectángulo', skinGoldbar:'💰 Lingote',
+        skinCircle:'⚪ Círculo', skinSunflower:'🌻 Girasol', skinEgg:'🥚 Huevo', skinChick:'🐤 Pollito',
+        skinLeaf:'🍃 Hoja', skinTree:'🌳 Árbol', skinStick:'🥢 Palo', skinPixel:'👾 Píxel',
+        skinMoon:'🌙 Luna', skinBee:'🐝 Abeja',
+        groundGreen:'🌿 Verde', groundPink:'🌸 Rosa', groundGold:'✨ Dorado', groundSnow:'❄️ Nieve',
+        groundLava:'🌋 Lava', groundNight:'🌑 Noche',
+        upgradeMult:'🔮 Multiplicador', upgradeLuck:'🍀 Suerte', upgradeSlow:'🐌 Lentitud', upgradeCursor:'🎯 Radio',
+        upgradeStarSize:'⭐ Tamaño', upgradeAuto:'🤖 Auto-recolectar', upgradeSeedCap:'🌱 Capacidad', upgradeAutoPlant:'🤖 Auto-plantar',
+        tempX2:'💥 x2 Monedas (10s)', tempSlow:'🐌 Lento (5s)', tempMagnet:'🧲 Imán (8s)', tempCollectAll:'💣 Recoger Todo',
     }
 };
-
 let currentLang = 'ru';
 function t(key) { return LANG[currentLang][key] || key; }
 
@@ -972,62 +944,62 @@ function renderShop(tab) {
     let html = '';
     
     if (tab === 'temp') {
-        html += `<div class="shop-item"><span>💥 x2 монет (10с)</span><span>💰 ${tempPrices.x2}</span><button id="buyTempX2">${t('buy')}</button></div>`;
-        html += `<div class="shop-item"><span>🐌 Замедление (5с)</span><span>💰 ${tempPrices.slow}</span><button id="buySlow">${t('buy')}</button></div>`;
-        html += `<div class="shop-item"><span>🧲 Магнит (8с)</span><span>💰 ${tempPrices.magnet}</span><button id="buyMagnet">${t('buy')}</button></div>`;
-        html += `<div class="shop-item"><span>💣 Собрать все</span><span>💰 ${tempPrices.collectAll}</span><button id="buyCollectAll">${t('buy')}</button></div>`;
-} else if (tab === 'perm') {
-    const multCost = Math.floor(150 * Math.pow(1.6, permMultLvl - 1));
-    html += `<div class="shop-item"><span>🔮 Множитель (ур.${permMultLvl}/20)</span><span>💰 ${permMultLvl >= 20 ? t('max') : multCost}</span><button id="buyPermMult" ${permMultLvl >= 20 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+        html += `<div class="shop-item"><span>${t('tempX2')}</span><span>💰 ${tempPrices.x2}</span><button id="buyTempX2">${t('buy')}</button></div>`;
+        html += `<div class="shop-item"><span>${t('tempSlow')}</span><span>💰 ${tempPrices.slow}</span><button id="buySlow">${t('buy')}</button></div>`;
+        html += `<div class="shop-item"><span>${t('tempMagnet')}</span><span>💰 ${tempPrices.magnet}</span><button id="buyMagnet">${t('buy')}</button></div>`;
+        html += `<div class="shop-item"><span>${t('tempCollectAll')}</span><span>💰 ${tempPrices.collectAll}</span><button id="buyCollectAll">${t('buy')}</button></div>`;
+    } else if (tab === 'perm') {
+        const multCost = Math.floor(150 * Math.pow(1.6, permMultLvl - 1));
+        html += `<div class="shop-item"><span>${t('upgradeMult')} (${t('lvl')}${permMultLvl}/20)</span><span>💰 ${permMultLvl >= 20 ? t('max') : multCost}</span><button id="buyPermMult" ${permMultLvl >= 20 ? 'disabled' : ''}>${t('buy')}</button></div>`;
 
-    const luckCost = Math.floor(100 * Math.pow(1.7, luckLvl));
-    html += `<div class="shop-item"><span>🍀 Удача (ур.${luckLvl}/10)</span><span>💰 ${luckLvl >= 10 ? t('max') : luckCost}</span><button id="buyLuck" ${luckLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+        const luckCost = Math.floor(100 * Math.pow(1.7, luckLvl));
+        html += `<div class="shop-item"><span>${t('upgradeLuck')} (${t('lvl')}${luckLvl}/10)</span><span>💰 ${luckLvl >= 10 ? t('max') : luckCost}</span><button id="buyLuck" ${luckLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
 
-    const slowCost = Math.floor(80 * Math.pow(1.7, slowPermLvl));
-    html += `<div class="shop-item"><span>🐌 Замедление (ур.${slowPermLvl}/10)</span><span>💰 ${slowPermLvl >= 10 ? t('max') : slowCost}</span><button id="buySlowPerm" ${slowPermLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+        const slowCost = Math.floor(80 * Math.pow(1.7, slowPermLvl));
+        html += `<div class="shop-item"><span>${t('upgradeSlow')} (${t('lvl')}${slowPermLvl}/10)</span><span>💰 ${slowPermLvl >= 10 ? t('max') : slowCost}</span><button id="buySlowPerm" ${slowPermLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
 
-    const cursorCost = Math.floor(90 * Math.pow(1.7, catchRadiusLvl));
-    html += `<div class="shop-item"><span>🎯 Радиус (ур.${catchRadiusLvl}/10)</span><span>💰 ${catchRadiusLvl >= 10 ? t('max') : cursorCost}</span><button id="buyCursor" ${catchRadiusLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+        const cursorCost = Math.floor(90 * Math.pow(1.7, catchRadiusLvl));
+        html += `<div class="shop-item"><span>${t('upgradeCursor')} (${t('lvl')}${catchRadiusLvl}/10)</span><span>💰 ${catchRadiusLvl >= 10 ? t('max') : cursorCost}</span><button id="buyCursor" ${catchRadiusLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
 
-    const sizeCost = Math.floor(70 * Math.pow(1.7, starSizeLvl));
-    html += `<div class="shop-item"><span>⭐ Размер звёзд (ур.${starSizeLvl}/10)</span><span>💰 ${starSizeLvl >= 10 ? t('max') : sizeCost}</span><button id="buyStarSize" ${starSizeLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+        const sizeCost = Math.floor(70 * Math.pow(1.7, starSizeLvl));
+        html += `<div class="shop-item"><span>${t('upgradeStarSize')} (${t('lvl')}${starSizeLvl}/10)</span><span>💰 ${starSizeLvl >= 10 ? t('max') : sizeCost}</span><button id="buyStarSize" ${starSizeLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
 
-    const autoCost = Math.floor(500 * Math.pow(2.0, autoCollectLvl));
-    html += `<div class="shop-item"><span>🤖 Автосбор (ур.${autoCollectLvl}/5)</span><span>💰 ${autoCollectLvl >= 5 ? t('max') : autoCost}</span><button id="buyAuto" ${autoCollectLvl >= 5 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+        const autoCost = Math.floor(500 * Math.pow(2.0, autoCollectLvl));
+        html += `<div class="shop-item"><span>${t('upgradeAuto')} (${t('lvl')}${autoCollectLvl}/5)</span><span>💰 ${autoCollectLvl >= 5 ? t('max') : autoCost}</span><button id="buyAuto" ${autoCollectLvl >= 5 ? 'disabled' : ''}>${t('buy')}</button></div>`;
 
-    const seedCapCost = Math.floor(200 * Math.pow(1.8, seedCapLvl - 1));
-    html += `<div class="shop-item"><span>🌱 Вместимость семян (ур.${seedCapLvl}/10)</span><span>💰 ${seedCapLvl >= 10 ? t('max') : seedCapCost}</span><button id="buySeedCap" ${seedCapLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+        const seedCapCost = Math.floor(200 * Math.pow(1.8, seedCapLvl - 1));
+        html += `<div class="shop-item"><span>${t('upgradeSeedCap')} (${t('lvl')}${seedCapLvl}/10)</span><span>💰 ${seedCapLvl >= 10 ? t('max') : seedCapCost}</span><button id="buySeedCap" ${seedCapLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
 
-    const autoPlantCost = Math.floor(80 * Math.pow(1.7, autoPlantLvl));
-    html += `<div class="shop-item"><span>🤖 Авто-посадка (ур.${autoPlantLvl}/20)</span><span>💰 ${autoPlantLvl >= 20 ? t('max') : autoPlantCost}</span><button id="buyAutoPlant" ${autoPlantLvl >= 20 ? 'disabled' : ''}>${t('buy')}</button></div>`;
-} else if (tab === 'starskins') {
+        const autoPlantCost = Math.floor(80 * Math.pow(1.7, autoPlantLvl));
+        html += `<div class="shop-item"><span>${t('upgradeAutoPlant')} (${t('lvl')}${autoPlantLvl}/20)</span><span>💰 ${autoPlantLvl >= 20 ? t('max') : autoPlantCost}</span><button id="buyAutoPlant" ${autoPlantLvl >= 20 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+    } else if (tab === 'starskins') {
         const allSkins = [
-            {id:'star4', name:'✦ Четырёхконечная', cost:300},
-            {id:'star5', name:'⭐ Пятиконечная', cost:350},
-            {id:'triangle', name:'🔺 Треугольник', cost:200},
-            {id:'diamond', name:'💎 Ромбик', cost:280},
-            {id:'square', name:'🟪 Квадрат', cost:180},
-            {id:'cat', name:'🐱 Котик', cost:500},
-            {id:'dog', name:'🐶 Собачка', cost:300},
-            {id:'hamster', name:'🐹 Хомяк', cost:300},
-            {id:'oval', name:'🥚 Овал', cost:190},
-            {id:'semicircle', name:'🌓 Полукруг', cost:170},
-            {id:'rectangle', name:'📏 Прямоугольник', cost:160},
-            {id:'goldbar', name:'💰 Слиток', cost:350},
-            {id:'circle', name:'⚪ Кружок', cost:250},
-            {id:'sunflower', name:'🌻 Подсолнух', cost:400},
-            {id:'egg', name:'🥚 Яйцо', cost:220},
-            {id:'chick', name:'🐤 Цыплёнок', cost:320},
-            {id:'leaf', name:'🍃 Листик', cost:240},
-            {id:'tree', name:'🌳 Дерево', cost:450},
-            {id:'stick', name:'🥢 Палка', cost:180},
-            {id:'pixel', name:'👾 Пиксель', cost:400},
-            {id:'moon', name:'🌙 Луна', cost:450},
-            {id:'bee', name:'🐝 Пчела', cost:380},
+            {id:'star4', key:'skinStar4', cost:300},
+            {id:'star5', key:'skinStar5', cost:350},
+            {id:'triangle', key:'skinTriangle', cost:200},
+            {id:'diamond', key:'skinDiamond', cost:280},
+            {id:'square', key:'skinSquare', cost:180},
+            {id:'cat', key:'skinCat', cost:500},
+            {id:'dog', key:'skinDog', cost:300},
+            {id:'hamster', key:'skinHamster', cost:300},
+            {id:'oval', key:'skinOval', cost:190},
+            {id:'semicircle', key:'skinSemicircle', cost:170},
+            {id:'rectangle', key:'skinRectangle', cost:160},
+            {id:'goldbar', key:'skinGoldbar', cost:350},
+            {id:'circle', key:'skinCircle', cost:250},
+            {id:'sunflower', key:'skinSunflower', cost:400},
+            {id:'egg', key:'skinEgg', cost:220},
+            {id:'chick', key:'skinChick', cost:320},
+            {id:'leaf', key:'skinLeaf', cost:240},
+            {id:'tree', key:'skinTree', cost:450},
+            {id:'stick', key:'skinStick', cost:180},
+            {id:'pixel', key:'skinPixel', cost:400},
+            {id:'moon', key:'skinMoon', cost:450},
+            {id:'bee', key:'skinBee', cost:380},
         ];
         allSkins.forEach(s => {
             const owned = ownedStarSkins.includes(s.id);
-            html += `<div class="shop-item"><span>${s.name}</span><span>💰 ${owned?'✓':s.cost}</span>`;
+            html += `<div class="shop-item"><span>${t(s.key)}</span><span>💰 ${owned?'✓':s.cost}</span>`;
             if (!owned) html += `<button class="buySkin" data-skin="${s.id}" data-cost="${s.cost}">${t('buy')}</button>`;
             else if (starSkin === s.id) html += `<span>✅</span>`;
             else html += `<button class="equipSkin" data-skin="${s.id}">${t('equip')}</button>`;
@@ -1035,16 +1007,16 @@ function renderShop(tab) {
         });
     } else if (tab === 'groundskins') {
         const grounds = [
-            {id:'green', name:'🌿 Зелёный', cost:200},
-            {id:'pink', name:'🌸 Розовый', cost:250},
-            {id:'gold', name:'✨ Золотой', cost:300},
-            {id:'snow', name:'❄️ Снежный', cost:280},
-            {id:'lava', name:'🌋 Лавовый', cost:350},
-            {id:'night', name:'🌑 Ночной', cost:220}
+            {id:'green', key:'groundGreen', cost:200},
+            {id:'pink', key:'groundPink', cost:250},
+            {id:'gold', key:'groundGold', cost:300},
+            {id:'snow', key:'groundSnow', cost:280},
+            {id:'lava', key:'groundLava', cost:350},
+            {id:'night', key:'groundNight', cost:220}
         ];
         grounds.forEach(s => {
             const owned = ownedGroundSkins.includes(s.id);
-            html += `<div class="shop-item"><span>${s.name}</span><span>💰 ${owned?'✓':s.cost}</span>`;
+            html += `<div class="shop-item"><span>${t(s.key)}</span><span>💰 ${owned?'✓':s.cost}</span>`;
             if (!owned) html += `<button class="buyGround" data-skin="${s.id}" data-cost="${s.cost}">${t('buy')}</button>`;
             else if (groundSkin === s.id) html += `<span>✅</span>`;
             else html += `<button class="equipGround" data-skin="${s.id}">${t('equip')}</button>`;
@@ -1054,7 +1026,7 @@ function renderShop(tab) {
     
     c.innerHTML = html;
     
-    setTimeout(() => {
+     setTimeout(() => {
         document.getElementById('buyTempX2')?.addEventListener('click', () => {
             if (coins >= tempPrices.x2) {
                 coins -= tempPrices.x2;
@@ -1306,14 +1278,38 @@ function updateAllTexts() {
     document.getElementById('settingsMenuBtn').textContent = t('settings');
     document.getElementById('tutorialMenuBtn').textContent = t('tutorial');
     document.getElementById('backToMenuBtn').innerHTML = '🚪 ' + t('back');
-    document.getElementById('ingameShopBtn').innerHTML = '🛒';
-    document.getElementById('ingameGardenBtn').innerHTML = '🌱';
+    document.getElementById('closeShop').textContent = t('close');
+    document.getElementById('closeGarden').textContent = t('close');
+    document.getElementById('closeSettings').textContent = t('close');
+    document.getElementById('closeStats').textContent = t('close');
+    document.getElementById('closeTutorial').textContent = t('understood');
     document.getElementById('plantSeedBtn').textContent = t('plant');
     document.getElementById('harvestBtn').textContent = t('harvest');
     document.getElementById('resetWaveBtn').textContent = t('resetWave');
     document.getElementById('tutorialText').innerHTML = t('tutorialText');
+    document.getElementById('shopTitle').textContent = t('shop');
+    document.getElementById('gardenTitle').textContent = t('garden');
+    document.getElementById('settingsTitle').textContent = t('settings');
+    document.getElementById('statsTitle').textContent = t('stats');
+    document.getElementById('tutorialTitle').textContent = t('tutorial');
+    document.getElementById('themeLabel').textContent = t('themeLabel');
+    document.getElementById('fontLabel').textContent = t('fontLabel');
+    document.getElementById('skyLabel').textContent = t('skyLabel');
+    document.getElementById('themeSpace').textContent = t('themeSpace');
+    document.getElementById('themeLight').textContent = t('themeLight');
+    document.getElementById('themeForest').textContent = t('themeForest');
+    document.getElementById('themeSunset').textContent = t('themeSunset');
+    document.getElementById('skySpace').textContent = t('skySpace');
+    document.getElementById('skyNight').textContent = t('skyNight');
+    document.getElementById('skyAurora').textContent = t('skyAurora');
+    document.getElementById('skySunset').textContent = t('skySunset');
+    document.getElementById('seedsLabel').textContent = t('seedsLabel');
+    document.getElementById('gardenGrowingLabel').textContent = t('gardenGrowing');
+    document.getElementById('gardenSecondsLabel').textContent = t('seconds');
+    document.getElementById('harvestLabel').textContent = t('harvestLabel');
+    document.getElementById('gardenAutoPlantLabel').textContent = t('gardenAutoPlant');
     initShopTabs();
-  updateUI();
+    updateUI();
 }
 
 document.getElementById('langSelect')?.addEventListener('change', function() {
