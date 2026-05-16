@@ -143,12 +143,7 @@
 </head>
 <body class="default" id="bodyTheme">
     <div class="game-wrapper">
-        <div class="lang-switch" id="langSwitch">
-            <button class="lang-btn active" data-lang="ru">🇷🇺 РУС</button>
-            <button class="lang-btn" data-lang="en">🇬🇧 ENG</button>
-        </div>
-
-        <div id="mainMenu" class="main-menu" style="display:flex;">
+            <div id="mainMenu" class="main-menu" style="display:flex;">
             <div class="main-title" id="mainTitle">✦ STAR GARDEN v2.0 ✦</div>
             <button class="main-btn" id="playBtn">🎮 Играть</button>
             <button class="main-btn" id="shopMenuBtn">🛒 Магазин</button>
@@ -158,45 +153,55 @@
             <button class="main-btn" id="tutorialMenuBtn">📖 Обучение</button>
         </div>
 
-        <div id="gameScreen" style="display:none; flex-direction:column; align-items:center; width:100%; gap:5px;">
-            <canvas id="gameCanvas"></canvas>
-            <div class="ui-top">
-                <span id="coinDisplay">💰 0</span>
-                <span id="waveDisplay">🌊 1</span>
-                <span id="seedDisplay">🌱 0</span>
-                <button class="shop-btn" id="ingameShopBtn">🛒</button>
-                <button class="garden-btn" id="ingameGardenBtn">🌱</button>
-                <button class="menu-btn" id="backToMenuBtn">🚪 Меню</button>
-            </div>
-        </div>
+      <div id="gameScreen" style="display:none; flex-direction:column; align-items:center; width:100%; gap:5px;">
+    <canvas id="gameCanvas"></canvas>
+    <div class="ui-top">
+        <span id="coinDisplay">💰 0</span>
+        <span id="waveDisplay">🌊 1</span>
+        <span id="seedDisplay">🌱 0</span>
+        <button class="shop-btn" id="ingameShopBtn">🛒</button>
+        <button class="garden-btn" id="ingameGardenBtn">🌱</button>
+        <button class="menu-btn" id="backToMenuBtn">🚪 <span id="menuBackLabel"></span></button>
     </div>
+</div>
 
-    <div class="modal-overlay" id="shopModal">
-        <div class="modal"><h2>🛒  Магазин</h2><div class="tabs" id="shopTabs"></div><div id="shopContent"></div><button class="close-btn" id="closeShop">Закрыть</button></div>
+<div class="modal-overlay" id="shopModal">
+    <div class="modal"><h2 id="shopTitle"></h2><div class="tabs" id="shopTabs"></div><div id="shopContent"></div><button class="close-btn" id="closeShop"></button></div>
+</div>
+
+<div class="modal-overlay" id="gardenModal">
+    <div class="modal"><h2 id="gardenTitle"></h2><p><span id="seedsLabel"></span> <span id="gardenSeedCount">0</span></p>
+    <p id="gardenStatus"></p>
+    <button id="plantSeedBtn" disabled></button>
+    <p id="gardenTimer" style="display:none;"><span id="gardenGrowingLabel"></span> <span id="gardenTimeLeft">120</span> <span id="gardenSecondsLabel"></span></p>
+    <button id="harvestBtn" style="display:none;">🎁 <span id="harvestLabel"></span></button>
+    <p style="font-size:0.7rem; margin-top:5px;"><span id="gardenAutoPlantLabel"></span> <span id="autoPlantLevel">0</span>/20</p>
+    <button class="close-btn" id="closeGarden"></button></div>
+</div>
+
+<div class="modal-overlay" id="settingsModal">
+    <div class="modal"><h2 id="settingsTitle"></h2>
+    <div class="setting-row"><span id="themeLabel"></span><select id="themeSelect"><option value="default">🌌 <span id="themeSpace"></span></option><option value="light">☀️ <span id="themeLight"></span></option><option value="forest">🌲 <span id="themeForest"></span></option><option value="sunset">🌅 <span id="themeSunset"></span></option></select></div>
+    <div class="setting-row"><span id="fontLabel"></span><select id="fontSelect"><option value="'Segoe UI', Arial">Segoe UI</option><option value="'Courier New', monospace">Courier New</option><option value="'Comic Sans MS', cursive">Comic Sans</option><option value="'Georgia', serif">Georgia</option></select></div>
+    <div class="setting-row"><span id="skyLabel"></span><select id="skySelect"><option value="default">🌌 <span id="skySpace"></span></option><option value="night">🌑 <span id="skyNight"></span></option><option value="aurora">🌠 <span id="skyAurora"></span></option><option value="sunset">🌅 <span id="skySunset"></span></option></select></div>
+    <div class="setting-row"><span id="langLabel">🌐</span>
+        <select id="langSelect">
+            <option value="ru">🇷🇺 <span id="langRu"></span></option>
+            <option value="en">🇬🇧 <span id="langEn"></span></option>
+            <option value="es">🇪🇸 <span id="langEs"></span></option>
+        </select>
     </div>
-    <div class="modal-overlay" id="gardenModal">
-        <div class="modal"><h2>🌱 Сад</h2><p>Семена: <span id="gardenSeedCount">0</span></p>
-        <p id="gardenStatus">Грядка пуста</p>
-        <button id="plantSeedBtn" disabled>Посадить семя</button>
-        <p id="gardenTimer" style="display:none;">Растёт... <span id="gardenTimeLeft">120</span> сек.</p>
-        <button id="harvestBtn" style="display:none;">🎁 Собрать урожай</button>
-        <p style="font-size:0.7rem; margin-top:5px;">🤖 Авто-посадка: ур. <span id="autoPlantLevel">0</span>/20</p>
-        <button class="close-btn" id="closeGarden">Закрыть</button></div>
-    </div>
-    <div class="modal-overlay" id="settingsModal">
-        <div class="modal"><h2>⚙️ Настройки</h2>
-        <div class="setting-row"><span>Тема</span><select id="themeSelect"><option value="default">🌌 Космос</option><option value="light">☀️ Светлая</option><option value="forest">🌲 Лесная</option><option value="sunset">🌅 Закат</option></select></div>
-        <div class="setting-row"><span>Шрифт</span><select id="fontSelect"><option value="'Segoe UI', Arial">Segoe UI</option><option value="'Courier New', monospace">Courier New</option><option value="'Comic Sans MS', cursive">Comic Sans</option><option value="'Georgia', serif">Georgia</option></select></div>
-        <div class="setting-row"><span>Небо</span><select id="skySelect"><option value="default">🌌 Космос</option><option value="night">🌑 Ночь</option><option value="aurora">🌠 Аврора</option><option value="sunset">🌅 Закат</option></select></div>
-        <button class="close-btn" id="resetWaveBtn">🔄 Сбросить волну (цены тоже)</button>
-        <button class="close-btn" id="closeSettings">Закрыть</button></div>
-    </div>
-    <div class="modal-overlay" id="statsModal">
-        <div class="modal"><h2>📊 Статистика</h2><div id="statsContent"></div><button class="close-btn" id="closeStats">Закрыть</button></div>
-    </div>
-    <div class="modal-overlay" id="tutorialModal">
-        <div class="modal"><h2>📖 Обучение</h2><p id="tutorialText"></p><button class="close-btn" id="closeTutorial">Понятно</button></div>
-    </div>
+    <button class="close-btn" id="resetWaveBtn"></button>
+    <button class="close-btn" id="closeSettings"></button></div>
+</div>
+
+<div class="modal-overlay" id="statsModal">
+    <div class="modal"><h2 id="statsTitle"></h2><div id="statsContent"></div><button class="close-btn" id="closeStats"></button></div>
+</div>
+
+<div class="modal-overlay" id="tutorialModal">
+    <div class="modal"><h2 id="tutorialTitle"></h2><p id="tutorialText"></p><button class="close-btn" id="closeTutorial"></button></div>
+</div>
 
 <script>
 // ============ ЧАСТЬ 1: ПЕРЕМЕННЫЕ, ЯЗЫКИ, ЗВУКИ, КАНВАС ============
@@ -208,17 +213,111 @@ const LANG = {
         resetWave: '🔄 Сбросить волну', plant: 'Посадить', harvest: '🎁 Собрать',
         tutorialText: '🌟 Кликай по падающим звёздам.<br>💰 Звёзды дают монеты (1–5000).<br>🌱 Иногда выпадают семена — сажай в Саду.<br>🎁 Урожай даёт баффы или скины.<br>🛒 В магазине: временные усиления, постоянные прокачки, скины звёзд и травы.<br>🔮 Волна растёт, можно сбросить.',
         totalPlayers: 'Всего игроков: ',
-        statCoins: '🏆 Топ по монетам', statTime: '⏱ Топ по времени', statCaught: '⭐ Топ пойманных', statSeeds: '🌱 Топ семян'
+        statCoins: '🏆 Топ по монетам', statTime: '⏱ Топ по времени', statCaught: '⭐ Топ пойманных', statSeeds: '🌱 Топ семян',
+        gardenEmpty: 'Грядка пуста',
+        gardenGrowing: 'Растёт...',
+        gardenReady: 'Урожай готов!',
+        gardenAutoPlant: '🤖 Авто-посадка: ур.',
+        seconds: 'сек.',
+        seedsLabel: 'Семена:',
+        harvestLabel: 'Собрать урожай',
+        themeLabel: 'Тема',
+        fontLabel: 'Шрифт',
+        skyLabel: 'Небо',
+        langLabel: 'Язык',
+        themeSpace: 'Космос',
+        themeLight: 'Светлая',
+        themeForest: 'Лесная',
+        themeSunset: 'Закат',
+        skySpace: 'Космос',
+        skyNight: 'Ночь',
+        skyAurora: 'Аврора',
+        skySunset: 'Закат',
+        langRu: 'Русский',
+        langEn: 'English',
+        langEs: 'Español',
+        shopTitle: '🛒 Магазин',
+        gardenTitle: '🌱 Сад',
+        settingsTitle: '⚙️ Настройки',
+        statsTitle: '📊 Статистика',
+        tutorialTitle: '📖 Обучение',
+        understood: 'Понятно',
     },
     en: {
         play: '🎮 Play', shop: '🛒 Shop', garden: '🌱 Garden', stats: '📊 Stats', settings: '⚙️ Settings', tutorial: '📖 Tutorial',
         back: '🚪 Menu', coins: '💰', wave: '🌊', seeds: '🌱', buy: 'Buy', equip: 'Equip', max: 'Max', close: 'Close',
         temp: '⏳ Temporary', perm: '🔮 Upgrades', starskins: '✨ Star Skins', groundskins: '🌿 Ground', skies: '🌌 Sky',
         resetWave: '🔄 Reset Wave', plant: 'Plant', harvest: '🎁 Harvest',
-        tutorialText: '🌟 Click falling stars.<br>💰 Stars give coins (1–5000).<br>🌱 Seeds drop sometimes — plant in Garden.<br>🎁 Harvest gives buffs or skins.<br>🛒 Shop: temp boosts, perm upgrades, skins.<br>🔮 Wave grows, can be reset.',
+        tutorialText: '🌟 Click falling stars.<br>💰 Stars give coins (1-5000).<br>🌱 Seeds drop sometimes — plant in Garden.<br>🎁 Harvest gives buffs or skins.<br>🛒 Shop: temp boosts, permanent upgrades, star & ground skins.<br>🔮 Wave grows, can be reset.',
         totalPlayers: 'Total players: ',
-        statCoins: '🏆 Top Coins', statTime: '⏱ Top Time', statCaught: '⭐ Top Caught', statSeeds: '🌱 Top Seeds'
+        statCoins: '🏆 Top Coins', statTime: '⏱ Top Time', statCaught: '⭐ Top Caught', statSeeds: '🌱 Top Seeds',
+        gardenEmpty: 'Garden bed is empty',
+        gardenGrowing: 'Growing...',
+        gardenReady: 'Harvest ready!',
+        gardenAutoPlant: 'Auto-plant: lvl',
+        seconds: 'sec.',
+        seedsLabel: 'Seeds:',
+        harvestLabel: 'Harvest',
+        themeLabel: 'Theme',
+        fontLabel: 'Font',
+        skyLabel: 'Sky',
+        langLabel: 'Language',
+        themeSpace: 'Space',
+        themeLight: 'Light',
+        themeForest: 'Forest',
+        themeSunset: 'Sunset',
+        skySpace: 'Space',
+        skyNight: 'Night',
+        skyAurora: 'Aurora',
+        skySunset: 'Sunset',
+        langRu: 'Русский',
+        langEn: 'English',
+        langEs: 'Español',
+        shopTitle: '🛒 Shop',
+        gardenTitle: '🌱 Garden',
+        settingsTitle: '⚙️ Settings',
+        statsTitle: '📊 Stats',
+        tutorialTitle: '📖 Tutorial',
+        understood: 'Got it',
+    },
+    es: {
+        play: '🎮 Jugar', shop: '🛒 Tienda', garden: '🌱 Jardín', stats: '📊 Estadísticas', settings: '⚙️ Ajustes', tutorial: '📖 Tutorial',
+        back: '🚪 Menú', coins: '💰', wave: '🌊', seeds: '🌱', buy: 'Comprar', equip: 'Equipar', max: 'Máx', close: 'Cerrar',
+        temp: '⏳ Temporal', perm: '🔮 Mejoras', starskins: '✨ Skins Estrella', groundskins: '🌿 Suelo', skies: '🌌 Cielo',
+        resetWave: '🔄 Reiniciar Ola', plant: 'Plantar', harvest: '🎁 Cosechar',
+        tutorialText: '🌟 Haz clic en las estrellas que caen.<br>💰 Las estrellas dan monedas (1-5000).<br>🌱 A veces caen semillas — plántalas en el Jardín.<br>🎁 La cosecha da mejoras o skins.<br>🛒 Tienda: mejoras temporales, mejoras permanentes, skins de estrellas y suelo.<br>🔮 La ola crece, se puede reiniciar.',
+        totalPlayers: 'Jugadores totales: ',
+        statCoins: '🏆 Top Monedas', statTime: '⏱ Top Tiempo', statCaught: '⭐ Top Atrapadas', statSeeds: '🌱 Top Semillas',
+        gardenEmpty: 'El jardín está vacío',
+        gardenGrowing: 'Creciendo...',
+        gardenReady: '¡Cosecha lista!',
+        gardenAutoPlant: 'Auto-plantar: niv.',
+        seconds: 'seg.',
+        seedsLabel: 'Semillas:',
+        harvestLabel: 'Cosechar',
+        themeLabel: 'Tema',
+        fontLabel: 'Fuente',
+        skyLabel: 'Cielo',
+        langLabel: 'Idioma',
+        themeSpace: 'Espacio',
+        themeLight: 'Claro',
+        themeForest: 'Bosque',
+        themeSunset: 'Atardecer',
+        skySpace: 'Espacio',
+        skyNight: 'Noche',
+        skyAurora: 'Aurora',
+        skySunset: 'Atardecer',
+        langRu: 'Русский',
+        langEn: 'English',
+        langEs: 'Español',
+        shopTitle: '🛒 Tienda',
+        gardenTitle: '🌱 Jardín',
+        settingsTitle: '⚙️ Ajustes',
+        statsTitle: '📊 Estadísticas',
+        tutorialTitle: '📖 Tutorial',
+        understood: 'Entendido',
     }
+};
 };
 
 let currentLang = 'ru';
@@ -319,6 +418,8 @@ const starTypes = [
     { id: 'rainbow', hue:-1,  size:5,  speed:5.5, value:5000, weight:0.1, seedChance:0.90, doubleClick:false },
     { id: 'double',  hue:300, size:10, speed:2.5, value:300,  weight:1.5, seedChance:0.60, doubleClick:true, clicksNeeded:2 },
     { id: 'pixel',   hue:200, size:7,  speed:2.0, value:200,  weight:2,   seedChance:0.25, doubleClick:false },
+    { id: 'nova',  hue:240, size:6,  speed:8.0, value:100000, weight:0.05, seedChance:0.95, doubleClick:false },
+    { id: 'red',   hue:0,   size:14, speed:1.8, value:0,     weight:0.8,  seedChance:0.10, doubleClick:false, explode:true },
 ];
 
 function getMaxSeeds() { return Math.min(500, BASE_SEED_CAP + (seedCapLvl-1)*40); }
@@ -355,6 +456,24 @@ function spawnStar() {
     // ============ ЧАСТЬ 2: ЛОГИКА, ОТРИСОВКА, МАГАЗИН, САД, СТАТИСТИКА ============
 
 function catchStar(star) {
+        if (star.type.explode) {
+        let bonus = 0;
+        for (let i = fallingStars.length-1; i >= 0; i--) {
+            const s = fallingStars[i];
+            if (s !== star && dist(star.x, star.y, s.x, s.y) < 80) {
+                bonus += Math.floor(s.value * 0.5);
+                burstParticles(s.x, s.y, s.hue);
+                fallingStars.splice(i, 1);
+            }
+        }
+        coins += bonus;
+        floatingTexts.push({x:star.x, y:star.y, text:'💥 +'+bonus, life:50, color:'#ff4444'});
+        sfxCatch();
+        const idx = fallingStars.indexOf(star);
+        if (idx >= 0) fallingStars.splice(idx, 1);
+        updateUI();
+        return;
+    }
     let value = Math.floor(star.value * (1 + (permMultLvl-1)*0.45) * tempMult);
     coins += value;
     totalCaught++;
@@ -1063,18 +1182,18 @@ function updateGardenUI() {
     const harvestBtn = document.getElementById('harvestBtn');
     
     if (gardenGrowing) {
-        statusP.textContent = '🌱 Растёт...';
+       statusP.textContent = t('gardenGrowing');
         timerP.style.display = 'block';
         document.getElementById('gardenTimeLeft').textContent = Math.ceil(gardenTimer/60);
         plantBtn.style.display = 'none';
         harvestBtn.style.display = 'none';
     } else if (gardenReward) {
-        statusP.textContent = '🎁 Урожай готов!';
+        statusP.textContent = t('gardenReady');
         timerP.style.display = 'none';
         plantBtn.style.display = 'none';
         harvestBtn.style.display = 'inline-block';
     } else {
-        statusP.textContent = 'Грядка пуста';
+        statusP.textContent = t('gardenEmpty');
         timerP.style.display = 'none';
         plantBtn.style.display = seeds > 0 ? 'inline-block' : 'none';
         plantBtn.disabled = seeds <= 0;
