@@ -1313,26 +1313,24 @@ function updateAllTexts() {
     document.getElementById('resetWaveBtn').textContent = t('resetWave');
     document.getElementById('tutorialText').innerHTML = t('tutorialText');
     initShopTabs();
-    updateUI();
+  updateUI();
 }
 
-document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        currentLang = btn.dataset.lang;
-        localStorage.setItem('starGardenLang', currentLang);
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
-        updateAllTexts();
-    });
+document.getElementById('langSelect')?.addEventListener('change', function() {
+    currentLang = this.value;
+    localStorage.setItem('starGardenLang', currentLang);
+    updateAllTexts();
 });
 
 const savedLang = localStorage.getItem('starGardenLang');
-if (savedLang) currentLang = savedLang;
-else {
+if (savedLang) {
+    currentLang = savedLang;
+    const langSelect = document.getElementById('langSelect');
+    if (langSelect) langSelect.value = savedLang;
+} else {
     const navLang = navigator.language || navigator.userLanguage;
-    currentLang = navLang.startsWith('ru') ? 'ru' : 'en';
+    currentLang = navLang.startsWith('ru') ? 'ru' : navLang.startsWith('es') ? 'es' : 'en';
 }
-document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
-
 document.getElementById('playBtn').addEventListener('click', () => {
     document.getElementById('mainMenu').style.display = 'none';
     document.getElementById('gameScreen').style.display = 'flex';
