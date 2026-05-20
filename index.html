@@ -448,9 +448,8 @@ fallingStars.push({
     });
 }
     // ============ ЧАСТЬ 2: ЛОГИКА, ОТРИСОВКА, МАГАЗИН, САД, СТАТИСТИКА ============
-
 function catchStar(star) {
-        if (star.type.explode) {
+    if (star.type.explode) {
         let bonus = 0;
         for (let i = fallingStars.length-1; i >= 0; i--) {
             const s = fallingStars[i];
@@ -478,13 +477,10 @@ function catchStar(star) {
     floatingTexts.push({x:star.x, y:star.y, text:`+${value}`, life:45, color:'#ffd700'});
     const idx = fallingStars.indexOf(star);
     if (idx >= 0) fallingStars.splice(idx, 1);
-if (Math.random() < star.type.seedChance && getTotalSeeds() < getMaxSeeds()) {
-    seeds[star.type.seedType] = (seeds[star.type.seedType] || 0) + 1;
-    sfxSeed();
-    floatingTexts.push({x:star.x+10, y:star.y-10, text:'🌱', life:35, color:'#aaffaa'});
-}
-if (totalCaught % 20 === 0) wave++;
-updateUI();
+    seeds.seed_yellow++;
+    console.log('🌱 СЕМЯ ВЫДАНО! Всего:', getTotalSeeds());
+    if (totalCaught % 20 === 0) wave++;
+    updateUI();
 }
 
 function plantFlower(starX, starHue) {
