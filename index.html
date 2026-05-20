@@ -170,13 +170,20 @@
 </div>
 
 <div class="modal-overlay" id="gardenModal">
-    <div class="modal"><h2 id="gardenTitle"></h2><p><span id="seedsLabel"></span> <span id="gardenSeedCount">0</span></p>
-    <p id="gardenStatus"></p>
-    <button id="plantSeedBtn" disabled></button>
-    <p id="gardenTimer" style="display:none;"><span id="gardenGrowingLabel"></span> <span id="gardenTimeLeft">120</span> <span id="gardenSecondsLabel"></span></p>
-    <button id="harvestBtn" style="display:none;">🎁 <span id="harvestLabel"></span></button>
-    <p style="font-size:0.7rem; margin-top:5px;"><span id="gardenAutoPlantLabel"></span> <span id="autoPlantLevel">0</span>/20</p>
-    <button class="close-btn" id="closeGarden"></button></div>
+    <div class="modal" style="max-width:600px;"><h2 id="gardenTitle"></h2>
+        <div style="display:flex; gap:10px; text-align:left;">
+            <div style="flex:1; border-right:1px solid var(--border); padding-right:10px;">
+                <h3>🌱 Грядки</h3>
+                <div id="gardenBeds"></div>
+            </div>
+            <div style="flex:1; padding-left:10px;">
+                <h3>🎒 Инвентарь</h3>
+                <div id="gardenInventory"></div>
+            </div>
+        </div>
+        <p style="font-size:0.7rem; margin-top:10px;"><span id="gardenAutoPlantLabel"></span> <span id="autoPlantLevel">0</span>/25</p>
+        <button class="close-btn" id="closeGarden"></button>
+    </div>
 </div>
 
 <div class="modal-overlay" id="settingsModal">
@@ -227,12 +234,14 @@ const LANG = {
         skinOval:'🥚 Овал', skinSemicircle:'🌓 Полукруг', skinRectangle:'📏 Прямоугольник', skinGoldbar:'💰 Слиток',
         skinCircle:'⚪ Кружок', skinSunflower:'🌻 Подсолнух', skinEgg:'🥚 Яйцо', skinChick:'🐤 Цыплёнок',
         skinLeaf:'🍃 Листик', skinTree:'🌳 Дерево', skinStick:'🥢 Палка', skinPixel:'👾 Пиксель',
-        skinMoon:'🌙 Луна', skinBee:'🐝 Пчела',
+        skinMoon:'🌙 Луна', skinBee:'🐝 Пчела', skinPentagon:'⬟ Пятиугольник', skinCatOld:'🐱 Старый кот', skinDogOld:'🐶 Старая собака', skinHamsterOld:'🐹 Старый хомяк',
         groundGreen:'🌿 Зелёный', groundPink:'🌸 Розовый', groundGold:'✨ Золотой', groundSnow:'❄️ Снежный',
         groundLava:'🌋 Лавовый', groundNight:'🌑 Ночной',
         upgradeMult:'🔮 Множитель', upgradeLuck:'🍀 Удача', upgradeSlow:'🐌 Замедление', upgradeCursor:'🎯 Радиус',
         upgradeStarSize:'⭐ Размер звёзд', upgradeAuto:'🤖 Автосбор', upgradeSeedCap:'🌱 Вместимость семян', upgradeAutoPlant:'🤖 Авто-посадка',
         tempX2:'💥 x2 монет (10с)', tempSlow:'🐌 Замедление (5с)', tempMagnet:'🧲 Магнит (8с)', tempCollectAll:'💣 Собрать все', lvl: 'ур.',
+        seed_yellow:'🌕 Жёлтое семечко', seed_green:'🌿 Зелёное семечко', seed_blue:'💧 Синее семечко', seed_purple:'🔮 Фиолетовое семечко', seed_maroon:'🍷 Бордовое семечко', seed_black:'🖤 Чёрное семечко', seed_gold:'🌟 Золотое семечко', seed_cyan:'🩵 Голубое семечко', seed_rainbow:'🌈 Радужное семечко', seed_double:'💎 Двойное семечко', seed_pixel:'👾 Пиксельное семечко', seed_nova:'💙 Семечко Новы', seed_red:'❤️ Взрывное семечко',
+        
     },
     en: {
         play:'🎮 Play', shop:'🛒 Shop', garden:'🌱 Garden', stats:'📊 Stats', settings:'⚙️ Settings', tutorial:'📖 Tutorial',
@@ -255,12 +264,13 @@ const LANG = {
         skinOval:'🥚 Oval', skinSemicircle:'🌓 Semicircle', skinRectangle:'📏 Rectangle', skinGoldbar:'💰 Gold Bar',
         skinCircle:'⚪ Circle', skinSunflower:'🌻 Sunflower', skinEgg:'🥚 Egg', skinChick:'🐤 Chick',
         skinLeaf:'🍃 Leaf', skinTree:'🌳 Tree', skinStick:'🥢 Stick', skinPixel:'👾 Pixel',
-        skinMoon:'🌙 Moon', skinBee:'🐝 Bee',
+        skinMoon:'🌙 Moon', skinBee:'🐝 Bee', skinPentagon:'⬟ Pentagon', skinCatOld:'🐱 Old Cat', skinDogOld:'🐶 Old Dog', skinHamsterOld:'🐹 Old Hamster',
         groundGreen:'🌿 Green', groundPink:'🌸 Pink', groundGold:'✨ Gold', groundSnow:'❄️ Snow',
         groundLava:'🌋 Lava', groundNight:'🌑 Night',
         upgradeMult:'🔮 Multiplier', upgradeLuck:'🍀 Luck', upgradeSlow:'🐌 Slow', upgradeCursor:'🎯 Cursor',
         upgradeStarSize:'⭐ Star Size', upgradeAuto:'🤖 Auto-collect', upgradeSeedCap:'🌱 Seed Capacity', upgradeAutoPlant:'🤖 Auto-plant',
         tempX2:'💥 x2 Coins (10s)', tempSlow:'🐌 Slow (5s)', tempMagnet:'🧲 Magnet (8s)', tempCollectAll:'💣 Collect All', lvl: 'lvl',
+        seed_yellow:'🌕 Yellow Seed', seed_green:'🌿 Green Seed', seed_blue:'💧 Blue Seed', seed_purple:'🔮 Purple Seed', seed_maroon:'🍷 Maroon Seed', seed_black:'🖤 Black Seed', seed_gold:'🌟 Gold Seed', seed_cyan:'🩵 Cyan Seed', seed_rainbow:'🌈 Rainbow Seed', seed_double:'💎 Double Seed', seed_pixel:'👾 Pixel Seed', seed_nova:'💙 Nova Seed', seed_red:'❤️ Red Seed',
     },
     es: {
         play:'🎮 Jugar', shop:'🛒 Tienda', garden:'🌱 Jardín', stats:'📊 Estadísticas', settings:'⚙️ Ajustes', tutorial:'📖 Tutorial',
@@ -283,12 +293,13 @@ const LANG = {
         skinOval:'🥚 Óvalo', skinSemicircle:'🌓 Semicírculo', skinRectangle:'📏 Rectángulo', skinGoldbar:'💰 Lingote',
         skinCircle:'⚪ Círculo', skinSunflower:'🌻 Girasol', skinEgg:'🥚 Huevo', skinChick:'🐤 Pollito',
         skinLeaf:'🍃 Hoja', skinTree:'🌳 Árbol', skinStick:'🥢 Palo', skinPixel:'👾 Píxel',
-        skinMoon:'🌙 Luna', skinBee:'🐝 Abeja',
+        skinMoon:'🌙 Luna', skinBee:'🐝 Abeja', skinPentagon:'⬟ Pentágono', skinCatOld:'🐱 Gato Viejo', skinDogOld:'🐶 Perro Viejo', skinHamsterOld:'🐹 Hámster Viejo',
         groundGreen:'🌿 Verde', groundPink:'🌸 Rosa', groundGold:'✨ Dorado', groundSnow:'❄️ Nieve',
         groundLava:'🌋 Lava', groundNight:'🌑 Noche',
         upgradeMult:'🔮 Multiplicador', upgradeLuck:'🍀 Suerte', upgradeSlow:'🐌 Lentitud', upgradeCursor:'🎯 Radio',
         upgradeStarSize:'⭐ Tamaño', upgradeAuto:'🤖 Auto-recolectar', upgradeSeedCap:'🌱 Capacidad', upgradeAutoPlant:'🤖 Auto-plantar',
         tempX2:'💥 x2 Monedas (10s)', tempSlow:'🐌 Lento (5s)', tempMagnet:'🧲 Imán (8s)', tempCollectAll:'💣 Recoger Todo', lvl: 'niv.',
+        seed_yellow:'🌕 Semilla Amarilla', seed_green:'🌿 Semilla Verde', seed_blue:'💧 Semilla Azul', seed_purple:'🔮 Semilla Púrpura', seed_maroon:'🍷 Semilla Granate', seed_black:'🖤 Semilla Negra', seed_gold:'🌟 Semilla Dorada', seed_cyan:'🩵 Semilla Cian', seed_rainbow:'🌈 Semilla Arcoíris', seed_double:'💎 Semilla Doble', seed_pixel:'👾 Semilla Pixel', seed_nova:'💙 Semilla Nova', seed_red:'❤️ Semilla Roja',
     }
 };
 let currentLang = 'ru';
@@ -365,6 +376,13 @@ let skySkin = 'default';
 // Сад
 let gardenGrowing = false, gardenTimer = 0, gardenReward = null;
 let autoPlantTimer = 0;
+let seeds = {
+    seed_yellow: 0, seed_green: 0, seed_blue: 0, seed_purple: 0,
+    seed_maroon: 0, seed_black: 0, seed_gold: 0, seed_cyan: 0,
+    seed_rainbow: 0, seed_double: 0, seed_pixel: 0, seed_nova: 0, seed_red: 0
+};
+let gardenSlots = 1;
+let gardenPlants = [];
 
 // Статистика
 let starCaughtCounts = {};
@@ -378,22 +396,26 @@ const BASE_SEED_CAP = 100;
 
 // Типы звёзд
 const starTypes = [
-    { id: 'yellow',  hue:50,  size:9,  speed:1.0, value:1,    weight:24, seedChance:0.008, doubleClick:false },
-    { id: 'green',   hue:120, size:8,  speed:1.4, value:10,   weight:18, seedChance:0.15,  doubleClick:false },
-    { id: 'blue',    hue:210, size:8,  speed:1.1, value:5,    weight:22, seedChance:0.08,  doubleClick:false },
-    { id: 'purple',  hue:280, size:8,  speed:1.2, value:25,   weight:14, seedChance:0.06,  doubleClick:false },
-    { id: 'maroon',  hue:340, size:10, speed:2.0, value:50,   weight:5,  seedChance:0.04,  doubleClick:false },
-    { id: 'black',   hue:0,   size:12, speed:3.8, value:100,  weight:3.5,  seedChance:0.20,  doubleClick:false },
-    { id: 'gold',    hue:45,  size:11, speed:4.5, value:1000, weight:0.4, seedChance:0.70, doubleClick:false },
-    { id: 'cyan',    hue:180, size:9,  speed:3.2, value:500,  weight:2,  seedChance:0.40, doubleClick:false },
-    { id: 'rainbow', hue:-1,  size:5,  speed:5.5, value:5000, weight:0.1, seedChance:0.90, doubleClick:false },
-    { id: 'double',  hue:300, size:10, speed:2.5, value:300,  weight:1.5, seedChance:0.60, doubleClick:true, clicksNeeded:2 },
-    { id: 'pixel',   hue:200, size:7,  speed:2.0, value:200,  weight:2,   seedChance:0.25, doubleClick:false },
-    { id: 'nova',  hue:240, size:6,  speed:8.0, value:100000, weight:0.01, seedChance:0.95, doubleClick:false },
-    { id: 'red',   hue:0,   size:14, speed:1.8, value:0,     weight:4,  seedChance:0.10, doubleClick:false, explode:true },
+    { id: 'yellow',  hue:50,  size:9,  speed:1.0, value:1,    weight:24, seedChance:0.008, doubleClick:false, seedType:'seed_yellow' },
+    { id: 'green',   hue:120, size:8,  speed:1.4, value:10,   weight:18, seedChance:0.15,  doubleClick:false, seedType:'seed_green' },
+    { id: 'blue',    hue:210, size:8,  speed:1.1, value:5,    weight:22, seedChance:0.08,  doubleClick:false, seedType:'seed_blue' },
+    { id: 'purple',  hue:280, size:8,  speed:1.2, value:25,   weight:14, seedChance:0.06,  doubleClick:false, seedType:'seed_purple' },
+    { id: 'maroon',  hue:340, size:10, speed:2.0, value:50,   weight:5,  seedChance:0.04,  doubleClick:false, seedType:'seed_maroon' },
+    { id: 'black',   hue:0,   size:12, speed:3.8, value:100,  weight:3.5, seedChance:0.20,  doubleClick:false, seedType:'seed_black' },
+    { id: 'gold',    hue:45,  size:11, speed:4.5, value:1000, weight:0.4, seedChance:0.70, doubleClick:false, seedType:'seed_gold' },
+    { id: 'cyan',    hue:180, size:9,  speed:3.2, value:500,  weight:2,   seedChance:0.40, doubleClick:false, seedType:'seed_cyan' },
+    { id: 'rainbow', hue:-1,  size:5,  speed:5.5, value:5000, weight:0.1, seedChance:0.90, doubleClick:false, seedType:'seed_rainbow' },
+    { id: 'double',  hue:300, size:10, speed:2.5, value:300,  weight:1.5, seedChance:0.60, doubleClick:true, clicksNeeded:2, seedType:'seed_double' },
+    { id: 'pixel',   hue:200, size:7,  speed:2.0, value:200,  weight:2,   seedChance:0.25, doubleClick:false, seedType:'seed_pixel' },
+    { id: 'nova',    hue:240, size:6,  speed:8.0, value:100000, weight:0.01, seedChance:0.95, doubleClick:false, seedType:'seed_nova' },
+    { id: 'red',     hue:0,   size:14, speed:1.8, value:0,     weight:4,   seedChance:0.10, doubleClick:false, explode:true, seedType:'seed_red' },
 ];
     
 function getMaxSeeds() { return Math.min(500, BASE_SEED_CAP + (seedCapLvl-1)*40); }
+
+function getTotalSeeds() {
+    return Object.values(seeds).reduce((a, b) => a + b, 0);
+}
 function random(min,max) { return Math.random()*(max-min)+min; }
 function randomInt(min,max) { return Math.floor(random(min,max+1)); }
 function dist(x1,y1,x2,y2) { return Math.sqrt((x2-x1)**2+(y2-y1)**2); }
@@ -455,13 +477,13 @@ function catchStar(star) {
     floatingTexts.push({x:star.x, y:star.y, text:`+${value}`, life:45, color:'#ffd700'});
     const idx = fallingStars.indexOf(star);
     if (idx >= 0) fallingStars.splice(idx, 1);
-    if (Math.random() < star.type.seedChance && seeds < getMaxSeeds()) {
-        seeds++;
-        sfxSeed();
-        floatingTexts.push({x:star.x+10, y:star.y-10, text:'🌱', life:35, color:'#aaffaa'});
-    }
-    if (totalCaught % 20 === 0) wave++;
-    updateUI();
+    if (Math.random() < star.type.seedChance && getTotalSeeds() < getMaxSeeds()) {
+    seeds[star.type.seedType]++;
+    sfxSeed();
+    floatingTexts.push({x:star.x+10, y:star.y-10, text:'🌱', life:35, color:'#aaffaa'});
+}
+if (totalCaught % 20 === 0) wave++;
+updateUI();
 }
 
 function plantFlower(starX, starHue) {
@@ -543,27 +565,7 @@ function update() {
     if (tempMultTimer > 0 && --tempMultTimer <= 0) tempMult = 1;
     if (slowTimer > 0 && --slowTimer <= 0) slowMotion = false;
     if (magnetTimer > 0 && --magnetTimer <= 0) magnetActive = false;
-
-    if (gardenGrowing && --gardenTimer <= 0) {
-        gardenGrowing = false;
-        harvestReady();
-        updateGardenUI();
-    }
-
-    if (autoPlantLvl > 0 && !gardenGrowing && !gardenReward && seeds > 0) {
-        autoPlantTimer++;
-        const interval = Math.max(30, 1200 - autoPlantLvl * 55);
-        if (autoPlantTimer >= interval) {
-            autoPlantTimer = 0;
-            seeds--;
-            seedsPlanted++;
-            gardenGrowing = true;
-            gardenTimer = 7200;
-            updateUI();
-            updateGardenUI();
-        }
-    }
-
+    
 if (fallingStars.length < 15) {
     spawnStar();
 }
@@ -599,13 +601,45 @@ if (fallingStars.length < 15) {
 
     for (const f of flowers) f.phase += 0.03;
 
-    if (autoCollectLvl > 0 && fallingStars.length > 0) {
+        if (autoCollectLvl > 0 && fallingStars.length > 0) {
     const interval = Math.max(60, 300 - autoCollectLvl * 40);
     if (frameCount % interval === 0) {
         const target = fallingStars[Math.floor(Math.random() * fallingStars.length)];
         if (target) catchStar(target);
     }
 }
+
+    // Обновление таймеров грядок
+    for (let i = gardenPlants.length-1; i >= 0; i--) {
+        const plant = gardenPlants[i];
+        if (plant && plant.timer > 0) {
+            plant.timer--;
+        }
+    }
+
+    // Авто-посадка
+    if (autoPlantLvl > 0) {
+        autoPlantTimer++;
+        const interval = Math.max(30, 1200 - autoPlantLvl * 40);
+        if (autoPlantTimer >= interval) {
+            autoPlantTimer = 0;
+            if (gardenPlants.filter(p => p).length < gardenSlots) {
+                const seedTypes = Object.keys(seeds);
+                for (const st of seedTypes) {
+                    if (seeds[st] > 0) {
+                        seeds[st]--;
+                        seedsPlanted++;
+                        gardenPlants.push({
+                            seedKey: st,
+                            timer: 7200,
+                            reward: null
+                        });
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
     updateUI();
     saveGame();
@@ -614,7 +648,7 @@ if (fallingStars.length < 15) {
 function updateUI() {
     document.getElementById('coinDisplay').textContent = `💰 ${coins}`;
     document.getElementById('waveDisplay').textContent = `🌊 ${wave}`;
-    document.getElementById('seedDisplay').textContent = `🌱 ${seeds}`;
+    document.getElementById('seedDisplay').textContent = `🌱 ${getTotalSeeds()}`;
 }
 
 // ============ ОТРИСОВКА ============
@@ -692,17 +726,19 @@ function draw() {
         ctx.shadowBlur = s * 1.5;
         
         switch(starSkin) {
-            case 'star5':
-                const step = Math.PI/5, rot = Math.PI/2*3;
-                ctx.beginPath();
-                for (let i=0; i<5; i++) {
-                    ctx.lineTo(Math.cos(rot)*s, Math.sin(rot)*s);
-                    rot += step;
-                    ctx.lineTo(Math.cos(rot)*s*0.5, Math.sin(rot)*s*0.5);
-                    rot += step;
-                }
-                ctx.closePath(); ctx.fill();
-                break;
+          case 'star5':
+    const step5 = Math.PI / 5;
+    let rot5 = -Math.PI / 2;
+    ctx.beginPath();
+    for (let i = 0; i < 5; i++) {
+        ctx.lineTo(Math.cos(rot5) * s, Math.sin(rot5) * s);
+        rot5 += step5;
+        ctx.lineTo(Math.cos(rot5) * s * 0.5, Math.sin(rot5) * s * 0.5);
+        rot5 += step5;
+    }
+    ctx.closePath();
+    ctx.fill();
+    break;
             case 'star4':
                 ctx.beginPath();
                 for (let i=0; i<8; i++) {
@@ -829,6 +865,41 @@ function draw() {
                 ctx.fillStyle = '#8B4513';
                 ctx.fillRect(-s * 0.15, -s * 0.7, s * 0.3, s * 1.4);
                 break;
+                            case 'pentagon':
+                const stepP = Math.PI / 2.5;
+                let rotP = -Math.PI / 2;
+                ctx.beginPath();
+                for (let i = 0; i < 5; i++) {
+                    ctx.lineTo(Math.cos(rotP) * s, Math.sin(rotP) * s);
+                    rotP += stepP;
+                }
+                ctx.closePath();
+                ctx.fill();
+                break;
+            case 'cat_old':
+                ctx.beginPath(); ctx.arc(0, 0, s * 0.8, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#fff';
+                ctx.beginPath(); ctx.arc(-s * 0.3, -s * 0.4, s * 0.2, 0, Math.PI * 2); ctx.fill();
+                ctx.beginPath(); ctx.arc(s * 0.3, -s * 0.4, s * 0.2, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#ffaaaa';
+                ctx.beginPath(); ctx.arc(0, s * 0.2, s * 0.1, 0, Math.PI); ctx.fill();
+                break;
+            case 'dog_old':
+                ctx.beginPath(); ctx.arc(0, 0, s * 0.8, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#fff';
+                ctx.beginPath(); ctx.arc(-s * 0.4, -s * 0.5, s * 0.15, 0, Math.PI * 2); ctx.fill();
+                ctx.beginPath(); ctx.arc(s * 0.4, -s * 0.5, s * 0.15, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#000';
+                ctx.beginPath(); ctx.arc(0, s * 0.1, s * 0.15, 0, Math.PI); ctx.fill();
+                break;
+            case 'hamster_old':
+                ctx.beginPath(); ctx.ellipse(0, 0, s * 0.9, s * 0.7, 0, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#fff';
+                ctx.beginPath(); ctx.arc(-s * 0.25, -s * 0.3, s * 0.15, 0, Math.PI * 2); ctx.fill();
+                ctx.beginPath(); ctx.arc(s * 0.25, -s * 0.3, s * 0.15, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#ffb6c1';
+                ctx.beginPath(); ctx.arc(0, s * 0.3, s * 0.12, 0, Math.PI); ctx.fill();
+                break;
             default:
                 ctx.beginPath();
                 for (let i=0; i<8; i++) {
@@ -949,30 +1020,30 @@ function renderShop(tab) {
         html += `<div class="shop-item"><span>${t('tempMagnet')}</span><span>💰 ${tempPrices.magnet}</span><button id="buyMagnet">${t('buy')}</button></div>`;
         html += `<div class="shop-item"><span>${t('tempCollectAll')}</span><span>💰 ${tempPrices.collectAll}</span><button id="buyCollectAll">${t('buy')}</button></div>`;
     } else if (tab === 'perm') {
-        const multCost = Math.floor(150 * Math.pow(1.6, permMultLvl - 1));
-        html += `<div class="shop-item"><span>${t('upgradeMult')} (${t('lvl')}${permMultLvl}/20)</span><span>💰 ${permMultLvl >= 20 ? t('max') : multCost}</span><button id="buyPermMult" ${permMultLvl >= 20 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+    const multCost = Math.floor(300 * Math.pow(1.8, permMultLvl - 1));
+    html += `<div class="shop-item"><span>${t('upgradeMult')} (${t('lvl')}${permMultLvl}/25)</span><span>💰 ${permMultLvl >= 25 ? t('max') : multCost}</span><button id="buyPermMult" ${permMultLvl >= 25 ? 'disabled' : ''}>${t('buy')}</button></div>`;
 
-        const luckCost = Math.floor(100 * Math.pow(1.7, luckLvl));
-        html += `<div class="shop-item"><span>${t('upgradeLuck')} (${t('lvl')}${luckLvl}/10)</span><span>💰 ${luckLvl >= 10 ? t('max') : luckCost}</span><button id="buyLuck" ${luckLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+    const luckCost = Math.floor(250 * Math.pow(1.9, luckLvl));
+    html += `<div class="shop-item"><span>${t('upgradeLuck')} (${t('lvl')}${luckLvl}/15)</span><span>💰 ${luckLvl >= 15 ? t('max') : luckCost}</span><button id="buyLuck" ${luckLvl >= 15 ? 'disabled' : ''}>${t('buy')}</button></div>`;
 
-        const slowCost = Math.floor(80 * Math.pow(1.7, slowPermLvl));
-        html += `<div class="shop-item"><span>${t('upgradeSlow')} (${t('lvl')}${slowPermLvl}/10)</span><span>💰 ${slowPermLvl >= 10 ? t('max') : slowCost}</span><button id="buySlowPerm" ${slowPermLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+    const slowCost = Math.floor(200 * Math.pow(1.9, slowPermLvl));
+    html += `<div class="shop-item"><span>${t('upgradeSlow')} (${t('lvl')}${slowPermLvl}/15)</span><span>💰 ${slowPermLvl >= 15 ? t('max') : slowCost}</span><button id="buySlowPerm" ${slowPermLvl >= 15 ? 'disabled' : ''}>${t('buy')}</button></div>`;
 
-        const cursorCost = Math.floor(90 * Math.pow(1.7, catchRadiusLvl));
-        html += `<div class="shop-item"><span>${t('upgradeCursor')} (${t('lvl')}${catchRadiusLvl}/10)</span><span>💰 ${catchRadiusLvl >= 10 ? t('max') : cursorCost}</span><button id="buyCursor" ${catchRadiusLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+    const cursorCost = Math.floor(200 * Math.pow(1.9, catchRadiusLvl));
+    html += `<div class="shop-item"><span>${t('upgradeCursor')} (${t('lvl')}${catchRadiusLvl}/15)</span><span>💰 ${catchRadiusLvl >= 15 ? t('max') : cursorCost}</span><button id="buyCursor" ${catchRadiusLvl >= 15 ? 'disabled' : ''}>${t('buy')}</button></div>`;
 
-        const sizeCost = Math.floor(70 * Math.pow(1.7, starSizeLvl));
-        html += `<div class="shop-item"><span>${t('upgradeStarSize')} (${t('lvl')}${starSizeLvl}/10)</span><span>💰 ${starSizeLvl >= 10 ? t('max') : sizeCost}</span><button id="buyStarSize" ${starSizeLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+    const sizeCost = Math.floor(150 * Math.pow(1.9, starSizeLvl));
+    html += `<div class="shop-item"><span>${t('upgradeStarSize')} (${t('lvl')}${starSizeLvl}/15)</span><span>💰 ${starSizeLvl >= 15 ? t('max') : sizeCost}</span><button id="buyStarSize" ${starSizeLvl >= 15 ? 'disabled' : ''}>${t('buy')}</button></div>`;
 
-        const autoCost = Math.floor(500 * Math.pow(2.0, autoCollectLvl));
-        html += `<div class="shop-item"><span>${t('upgradeAuto')} (${t('lvl')}${autoCollectLvl}/5)</span><span>💰 ${autoCollectLvl >= 5 ? t('max') : autoCost}</span><button id="buyAuto" ${autoCollectLvl >= 5 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+    const autoCost = Math.floor(1000 * Math.pow(2.2, autoCollectLvl));
+    html += `<div class="shop-item"><span>${t('upgradeAuto')} (${t('lvl')}${autoCollectLvl}/8)</span><span>💰 ${autoCollectLvl >= 8 ? t('max') : autoCost}</span><button id="buyAuto" ${autoCollectLvl >= 8 ? 'disabled' : ''}>${t('buy')}</button></div>`;
 
-        const seedCapCost = Math.floor(200 * Math.pow(1.8, seedCapLvl - 1));
-        html += `<div class="shop-item"><span>${t('upgradeSeedCap')} (${t('lvl')}${seedCapLvl}/10)</span><span>💰 ${seedCapLvl >= 10 ? t('max') : seedCapCost}</span><button id="buySeedCap" ${seedCapLvl >= 10 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+    const seedCapCost = Math.floor(500 * Math.pow(2.0, seedCapLvl - 1));
+    html += `<div class="shop-item"><span>${t('upgradeSeedCap')} (${t('lvl')}${seedCapLvl}/15)</span><span>💰 ${seedCapLvl >= 15 ? t('max') : seedCapCost}</span><button id="buySeedCap" ${seedCapLvl >= 15 ? 'disabled' : ''}>${t('buy')}</button></div>`;
 
-        const autoPlantCost = Math.floor(80 * Math.pow(1.7, autoPlantLvl));
-        html += `<div class="shop-item"><span>${t('upgradeAutoPlant')} (${t('lvl')}${autoPlantLvl}/20)</span><span>💰 ${autoPlantLvl >= 20 ? t('max') : autoPlantCost}</span><button id="buyAutoPlant" ${autoPlantLvl >= 20 ? 'disabled' : ''}>${t('buy')}</button></div>`;
-    } else if (tab === 'starskins') {
+    const autoPlantCost = Math.floor(200 * Math.pow(1.9, autoPlantLvl));
+    html += `<div class="shop-item"><span>${t('upgradeAutoPlant')} (${t('lvl')}${autoPlantLvl}/25)</span><span>💰 ${autoPlantLvl >= 25 ? t('max') : autoPlantCost}</span><button id="buyAutoPlant" ${autoPlantLvl >= 25 ? 'disabled' : ''}>${t('buy')}</button></div>`;
+} else if (tab === 'starskins') {
         const allSkins = [
             {id:'star4', key:'skinStar4', cost:300},
             {id:'star5', key:'skinStar5', cost:350},
@@ -996,6 +1067,10 @@ function renderShop(tab) {
             {id:'pixel', key:'skinPixel', cost:400},
             {id:'moon', key:'skinMoon', cost:450},
             {id:'bee', key:'skinBee', cost:380},
+            {id:'pentagon', key:'skinPentagon', cost:320},
+            {id:'cat_old', key:'skinCatOld', cost:450},
+            {id:'dog_old', key:'skinDogOld', cost:450},
+            {id:'hamster_old', key:'skinHamsterOld', cost:450},
         ];
         allSkins.forEach(s => {
             const owned = ownedStarSkins.includes(s.id);
@@ -1071,37 +1146,37 @@ function renderShop(tab) {
             }
         });
         
-        document.getElementById('buyPermMult')?.addEventListener('click', () => {
-    const cost = Math.floor(150 * Math.pow(1.6, permMultLvl - 1));
-    if (coins >= cost && permMultLvl < 20) { coins -= cost; permMultLvl++; sfxBuy(); renderShop('perm'); }
+       document.getElementById('buyPermMult')?.addEventListener('click', () => {
+    const cost = Math.floor(300 * Math.pow(1.8, permMultLvl - 1));
+    if (coins >= cost && permMultLvl < 25) { coins -= cost; permMultLvl++; sfxBuy(); renderShop('perm'); }
 });
 document.getElementById('buyLuck')?.addEventListener('click', () => {
-    const cost = Math.floor(100 * Math.pow(1.7, luckLvl));
-    if (coins >= cost && luckLvl < 10) { coins -= cost; luckLvl++; sfxBuy(); renderShop('perm'); }
+    const cost = Math.floor(250 * Math.pow(1.9, luckLvl));
+    if (coins >= cost && luckLvl < 15) { coins -= cost; luckLvl++; sfxBuy(); renderShop('perm'); }
 });
 document.getElementById('buySlowPerm')?.addEventListener('click', () => {
-    const cost = Math.floor(80 * Math.pow(1.7, slowPermLvl));
-    if (coins >= cost && slowPermLvl < 10) { coins -= cost; slowPermLvl++; sfxBuy(); renderShop('perm'); }
+    const cost = Math.floor(200 * Math.pow(1.9, slowPermLvl));
+    if (coins >= cost && slowPermLvl < 15) { coins -= cost; slowPermLvl++; sfxBuy(); renderShop('perm'); }
 });
 document.getElementById('buyCursor')?.addEventListener('click', () => {
-    const cost = Math.floor(90 * Math.pow(1.7, catchRadiusLvl));
-    if (coins >= cost && catchRadiusLvl < 10) { coins -= cost; catchRadiusLvl++; sfxBuy(); renderShop('perm'); }
+    const cost = Math.floor(200 * Math.pow(1.9, catchRadiusLvl));
+    if (coins >= cost && catchRadiusLvl < 15) { coins -= cost; catchRadiusLvl++; sfxBuy(); renderShop('perm'); }
 });
 document.getElementById('buyStarSize')?.addEventListener('click', () => {
-    const cost = Math.floor(70 * Math.pow(1.7, starSizeLvl));
-    if (coins >= cost && starSizeLvl < 10) { coins -= cost; starSizeLvl++; sfxBuy(); renderShop('perm'); }
+    const cost = Math.floor(150 * Math.pow(1.9, starSizeLvl));
+    if (coins >= cost && starSizeLvl < 15) { coins -= cost; starSizeLvl++; sfxBuy(); renderShop('perm'); }
 });
 document.getElementById('buyAuto')?.addEventListener('click', () => {
-    const cost = Math.floor(500 * Math.pow(2.0, autoCollectLvl));
-    if (coins >= cost && autoCollectLvl < 5) { coins -= cost; autoCollectLvl++; sfxBuy(); renderShop('perm'); }
+    const cost = Math.floor(1000 * Math.pow(2.2, autoCollectLvl));
+    if (coins >= cost && autoCollectLvl < 8) { coins -= cost; autoCollectLvl++; sfxBuy(); renderShop('perm'); }
 });
 document.getElementById('buySeedCap')?.addEventListener('click', () => {
-    const cost = Math.floor(200 * Math.pow(1.8, seedCapLvl - 1));
-    if (coins >= cost && seedCapLvl < 10) { coins -= cost; seedCapLvl++; sfxBuy(); renderShop('perm'); }
+    const cost = Math.floor(500 * Math.pow(2.0, seedCapLvl - 1));
+    if (coins >= cost && seedCapLvl < 15) { coins -= cost; seedCapLvl++; sfxBuy(); renderShop('perm'); }
 });
 document.getElementById('buyAutoPlant')?.addEventListener('click', () => {
-    const cost = Math.floor(80 * Math.pow(1.7, autoPlantLvl));
-    if (coins >= cost && autoPlantLvl < 20) { coins -= cost; autoPlantLvl++; sfxBuy(); renderShop('perm'); }
+    const cost = Math.floor(200 * Math.pow(1.9, autoPlantLvl));
+    if (coins >= cost && autoPlantLvl < 25) { coins -= cost; autoPlantLvl++; sfxBuy(); renderShop('perm'); }
 });
         
         document.querySelectorAll('.buySkin').forEach(b => b.addEventListener('click', () => {
@@ -1137,83 +1212,110 @@ document.getElementById('buyAutoPlant')?.addEventListener('click', () => {
         }));
     }, 50);
 }
-
 // ============ САД ============
 function openGarden() {
-    document.getElementById('gardenSeedCount').textContent = seeds;
+    renderGardenBeds();
+    renderGardenInventory();
     document.getElementById('autoPlantLevel').textContent = autoPlantLvl;
-    updateGardenUI();
     document.getElementById('gardenModal').classList.add('active');
 }
 
-function updateGardenUI() {
-    const statusP = document.getElementById('gardenStatus');
-    const timerP = document.getElementById('gardenTimer');
-    const plantBtn = document.getElementById('plantSeedBtn');
-    const harvestBtn = document.getElementById('harvestBtn');
+function renderGardenBeds() {
+    const bedsDiv = document.getElementById('gardenBeds');
+    let html = '';
+    for (let i = 0; i < gardenSlots; i++) {
+        const plant = gardenPlants[i];
+        if (plant) {
+            html += `<div style="margin:5px 0; padding:8px; background:rgba(255,255,255,0.05); border-radius:8px;">
+                🌱 ${t(plant.seedKey)} — ${Math.ceil(plant.timer/60)} ${t('seconds')}
+                ${plant.timer <= 0 ? `<button onclick="harvestSpecificSlot(${i})">${t('harvest')}</button>` : ''}
+            </div>`;
+        } else {
+            html += `<div style="margin:5px 0; padding:8px; background:rgba(255,255,255,0.02); border-radius:8px; color:var(--border);">
+                ${t('gardenEmpty')}
+            </div>`;
+        }
+    }
+    bedsDiv.innerHTML = html || `<p>${t('gardenEmpty')}</p>`;
+}
+
+function renderGardenInventory() {
+    const invDiv = document.getElementById('gardenInventory');
+    let html = '';
+    const seedTypes = ['seed_yellow','seed_green','seed_blue','seed_purple','seed_maroon','seed_black','seed_gold','seed_cyan','seed_rainbow','seed_double','seed_pixel','seed_nova','seed_red'];
+    let hasSeeds = false;
+    seedTypes.forEach(st => {
+        const count = seeds[st] || 0;
+        if (count > 0) {
+            hasSeeds = true;
+            html += `<div style="display:flex; justify-content:space-between; align-items:center; margin:5px 0; padding:5px; background:rgba(255,255,255,0.03); border-radius:8px;">
+                <span>${t(st)}</span>
+                <span>${count}x</span>
+                <button onclick="plantSpecificSeed('${st}')" ${gardenPlants.filter(p=>p).length >= gardenSlots ? 'disabled' : ''} style="padding:3px 8px; font-size:0.7rem;">${t('plant')}</button>
+            </div>`;
+        }
+    });
+    invDiv.innerHTML = html || `<p>${t('gardenEmpty')}</p>`;
+}
+
+function plantSpecificSeed(seedKey) {
+    if ((seeds[seedKey] || 0) <= 0) return;
+    if (gardenPlants.filter(p => p).length >= gardenSlots) return;
     
-    if (gardenGrowing) {
-       statusP.textContent = t('gardenGrowing');
-        timerP.style.display = 'block';
-        document.getElementById('gardenTimeLeft').textContent = Math.ceil(gardenTimer/60);
-        plantBtn.style.display = 'none';
-        harvestBtn.style.display = 'none';
-    } else if (gardenReward) {
-        statusP.textContent = t('gardenReady');
-        timerP.style.display = 'none';
-        plantBtn.style.display = 'none';
-        harvestBtn.style.display = 'inline-block';
-    } else {
-        statusP.textContent = t('gardenEmpty');
-        timerP.style.display = 'none';
-        plantBtn.style.display = seeds > 0 ? 'inline-block' : 'none';
-        plantBtn.disabled = seeds <= 0;
-        harvestBtn.style.display = 'none';
-    }
-}
-
-function plantSeed() {
-    if (seeds <= 0 || gardenGrowing || gardenReward) return;
-    seeds--;
+    seeds[seedKey]--;
     seedsPlanted++;
-    gardenGrowing = true;
-    gardenReward = null;
-    gardenTimer = 7200;
+    gardenPlants.push({
+        seedKey: seedKey,
+        timer: 7200,
+        reward: null
+    });
+    renderGardenBeds();
+    renderGardenInventory();
     updateUI();
-    updateGardenUI();
 }
 
-function harvestReady() {
-    const r = Math.random();
-    if (r < 0.35) gardenReward = { type: 'buff', buff: 'x2' };
-    else if (r < 0.65) gardenReward = { type: 'buff', buff: 'slow' };
-    else if (r < 0.85) gardenReward = { type: 'buff', buff: 'magnet' };
-    else if (r < 0.99) {
-        const allSkins = ['star4', 'star5', 'triangle', 'diamond', 'square', 'cat', 'dog', 'hamster', 'oval', 'semicircle', 'rectangle', 'goldbar', 'circle', 'sunflower', 'egg', 'chick', 'leaf', 'tree', 'stick', 'pixel', 'moon', 'bee'];
-        const avail = allSkins.filter(s => !ownedStarSkins.includes(s));
-        gardenReward = avail.length > 0 ? { type: 'skin', skin: avail[Math.floor(Math.random()*avail.length)] } : { type: 'buff', buff: 'x2' };
-    } else {
-        gardenReward = { type: 'skin', skin: 'crown' };
-    }
-    updateGardenUI();
-}
-
-function harvestPlant() {
-    if (!gardenReward) return;
+function harvestSpecificSlot(slotIndex) {
+    const plant = gardenPlants[slotIndex];
+    if (!plant || plant.timer > 0) return;
+    
     sfxHarvest();
-    if (gardenReward.type === 'buff') {
-        switch(gardenReward.buff) {
+    const r = Math.random();
+    if (r < 0.35) {
+        // Бафф
+        const buffs = ['x2','slow','magnet'];
+        const buff = buffs[Math.floor(Math.random()*buffs.length)];
+        switch(buff) {
             case 'x2': tempMult = 2; tempMultTimer = 2700; break;
             case 'slow': slowMotion = true; slowTimer = 2700; break;
             case 'magnet': magnetActive = true; magnetTimer = 2700; break;
         }
-    } else if (gardenReward.type === 'skin') {
-        if (!ownedStarSkins.includes(gardenReward.skin)) ownedStarSkins.push(gardenReward.skin);
-        starSkin = gardenReward.skin;
+    } else if (r < 0.99) {
+        const allSkins = ['star4','star5','triangle','diamond','square','cat','dog','hamster','oval','semicircle','rectangle','goldbar','circle','sunflower','egg','chick','leaf','tree','stick','pixel','moon','bee','pentagon','cat_old','dog_old','hamster_old'];
+        const avail = allSkins.filter(s => !ownedStarSkins.includes(s));
+        if (avail.length > 0) {
+            const skin = avail[Math.floor(Math.random()*avail.length)];
+            if (!ownedStarSkins.includes(skin)) ownedStarSkins.push(skin);
+            starSkin = skin;
+        }
+    } else {
+        gardenReward = { type: 'skin', skin: 'crown' };
     }
-    gardenReward = null;
-    gardenGrowing = false;
-    updateGardenUI();
+    
+    gardenPlants.splice(slotIndex, 1);
+    renderGardenBeds();
+    renderGardenInventory();
+}
+
+// Обновление таймеров грядок
+function updateGardenTimers() {
+    for (let i = gardenPlants.length-1; i >= 0; i--) {
+        if (gardenPlants[i]) {
+            gardenPlants[i].timer--;
+            if (gardenPlants[i].timer <= 0) {
+                // Урожай готов, можно собирать
+            }
+        }
+    }
 }
 
 // ============ СТАТИСТИКА ============
@@ -1283,8 +1385,6 @@ function updateAllTexts() {
     document.getElementById('closeSettings').textContent = t('close');
     document.getElementById('closeStats').textContent = t('close');
     document.getElementById('closeTutorial').textContent = t('understood');
-    document.getElementById('plantSeedBtn').textContent = t('plant');
-    document.getElementById('harvestBtn').textContent = t('harvest');
     document.getElementById('resetWaveBtn').textContent = t('resetWave');
     document.getElementById('tutorialText').innerHTML = t('tutorialText');
     document.getElementById('shopTitle').textContent = t('shop');
@@ -1303,11 +1403,7 @@ function updateAllTexts() {
     document.getElementById('skyNight').textContent = t('skyNight');
     document.getElementById('skyAurora').textContent = t('skyAurora');
     document.getElementById('skySunset').textContent = t('skySunset');
-    document.getElementById('seedsLabel').textContent = t('seedsLabel');
-    document.getElementById('gardenGrowingLabel').textContent = t('gardenGrowing');
-    document.getElementById('gardenSecondsLabel').textContent = t('seconds');
-    document.getElementById('harvestLabel').textContent = t('harvestLabel');
-    document.getElementById('gardenAutoPlantLabel').textContent = t('gardenAutoPlant');
+   
     
     
     initShopTabs();
@@ -1365,9 +1461,6 @@ document.getElementById('ingameGardenBtn').addEventListener('click', openGarden)
 document.getElementById('closeGarden').addEventListener('click', () => {
     document.getElementById('gardenModal').classList.remove('active');
 });
-document.getElementById('plantSeedBtn').addEventListener('click', plantSeed);
-document.getElementById('harvestBtn').addEventListener('click', harvestPlant);
-
 document.getElementById('settingsMenuBtn').addEventListener('click', () => {
     document.getElementById('settingsModal').classList.add('active');
 });
