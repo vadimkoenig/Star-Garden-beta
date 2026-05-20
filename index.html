@@ -478,8 +478,8 @@ function catchStar(star) {
     floatingTexts.push({x:star.x, y:star.y, text:`+${value}`, life:45, color:'#ffd700'});
     const idx = fallingStars.indexOf(star);
     if (idx >= 0) fallingStars.splice(idx, 1);
-    if (Math.random() < star.type.seedChance && getTotalSeeds() < getMaxSeeds()) {
-    seeds[star.type.seedType]++;
+  if (getTotalSeeds() < getMaxSeeds()) {
+    seeds[star.type.seedType] = (seeds[star.type.seedType] || 0) + 1;
     sfxSeed();
     floatingTexts.push({x:star.x+10, y:star.y-10, text:'🌱', life:35, color:'#aaffaa'});
 }
