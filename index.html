@@ -396,19 +396,19 @@ const BASE_SEED_CAP = 100;
 
 // Типы звёзд
 const starTypes = [
-    { id: 'yellow',  hue:50,  size:9,  speed:1.0, value:1,    weight:24, seedChance:0.008, doubleClick:false, seedType:'seed_yellow' },
-    { id: 'green',   hue:120, size:8,  speed:1.4, value:10,   weight:18, seedChance:0.15,  doubleClick:false, seedType:'seed_green' },
-    { id: 'blue',    hue:210, size:8,  speed:1.1, value:5,    weight:22, seedChance:0.08,  doubleClick:false, seedType:'seed_blue' },
-    { id: 'purple',  hue:280, size:8,  speed:1.2, value:25,   weight:14, seedChance:0.06,  doubleClick:false, seedType:'seed_purple' },
-    { id: 'maroon',  hue:340, size:10, speed:2.0, value:50,   weight:5,  seedChance:0.04,  doubleClick:false, seedType:'seed_maroon' },
-    { id: 'black',   hue:0,   size:12, speed:3.8, value:100,  weight:3.5, seedChance:0.20,  doubleClick:false, seedType:'seed_black' },
-    { id: 'gold',    hue:45,  size:11, speed:4.5, value:1000, weight:0.4, seedChance:0.70, doubleClick:false, seedType:'seed_gold' },
-    { id: 'cyan',    hue:180, size:9,  speed:3.2, value:500,  weight:2,   seedChance:0.40, doubleClick:false, seedType:'seed_cyan' },
-    { id: 'rainbow', hue:-1,  size:5,  speed:5.5, value:5000, weight:0.1, seedChance:0.90, doubleClick:false, seedType:'seed_rainbow' },
-    { id: 'double',  hue:300, size:10, speed:2.5, value:300,  weight:1.5, seedChance:0.60, doubleClick:true, clicksNeeded:2, seedType:'seed_double' },
-    { id: 'pixel',   hue:200, size:7,  speed:2.0, value:200,  weight:2,   seedChance:0.25, doubleClick:false, seedType:'seed_pixel' },
-    { id: 'nova',    hue:240, size:6,  speed:8.0, value:100000, weight:0.01, seedChance:0.95, doubleClick:false, seedType:'seed_nova' },
-    { id: 'red',     hue:0,   size:14, speed:1.8, value:0,     weight:4,   seedChance:0.10, doubleClick:false, explode:true, seedType:'seed_red' },
+        { id: 'yellow',  hue:50,  size:9,  speed:1.0, value:1,    weight:24, seedChance:0.01, doubleClick:false, seedType:'seed_yellow' },
+    { id: 'green',   hue:120, size:8,  speed:1.4, value:10,   weight:18, seedChance:0.07, doubleClick:false, seedType:'seed_green' },
+    { id: 'blue',    hue:210, size:8,  speed:1.1, value:5,    weight:22, seedChance:0.05, doubleClick:false, seedType:'seed_blue' },
+    { id: 'purple',  hue:280, size:8,  speed:1.2, value:25,   weight:14, seedChance:0.09, doubleClick:false, seedType:'seed_purple' },
+    { id: 'maroon',  hue:340, size:10, speed:2.0, value:50,   weight:5,  seedChance:0.10, doubleClick:false, seedType:'seed_maroon' },
+    { id: 'black',   hue:0,   size:12, speed:3.8, value:100,  weight:3.5,seedChance:0.15, doubleClick:false, seedType:'seed_black' },
+    { id: 'gold',    hue:45,  size:11, speed:4.5, value:1000, weight:0.4,seedChance:0.30, doubleClick:false, seedType:'seed_gold' },
+    { id: 'cyan',    hue:180, size:9,  speed:3.2, value:500,  weight:2,  seedChance:0.20, doubleClick:false, seedType:'seed_cyan' },
+    { id: 'rainbow', hue:-1,  size:5,  speed:5.5, value:5000, weight:0.1,seedChance:1.00, doubleClick:false, seedType:'seed_rainbow' },
+    { id: 'double',  hue:300, size:10, speed:2.5, value:300,  weight:1.5,seedChance:0.20, doubleClick:true, clicksNeeded:2, seedType:'seed_double' },
+    { id: 'pixel',   hue:200, size:7,  speed:2.0, value:200,  weight:2,  seedChance:0.15, doubleClick:false, seedType:'seed_pixel' },
+    { id: 'nova',    hue:240, size:6,  speed:8.0, value:100000, weight:0.01,seedChance:1.00, doubleClick:false, seedType:'seed_nova' },
+    { id: 'red',     hue:0,   size:14, speed:1.8, value:0,     weight:4,  seedChance:0.10, doubleClick:false, explode:true, seedType:'seed_red' },
 ];
     
 function getMaxSeeds() { return Math.min(500, BASE_SEED_CAP + (seedCapLvl-1)*40); }
@@ -478,8 +478,8 @@ function catchStar(star) {
     floatingTexts.push({x:star.x, y:star.y, text:`+${value}`, life:45, color:'#ffd700'});
     const idx = fallingStars.indexOf(star);
     if (idx >= 0) fallingStars.splice(idx, 1);
-  if (getTotalSeeds() < getMaxSeeds()) {
-    seeds[star.type.seedType] = (seeds[star.type.seedType] || 0) + 1;
+if (Math.random() < star.type.seedChance && getTotalSeeds() < getMaxSeeds()) {
+    seeds[star.type.seedType]++;
     sfxSeed();
     floatingTexts.push({x:star.x+10, y:star.y-10, text:'🌱', life:35, color:'#aaffaa'});
 }
