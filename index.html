@@ -477,8 +477,8 @@ function catchStar(star) {
     floatingTexts.push({x:star.x, y:star.y, text:`+${value}`, life:45, color:'#ffd700'});
     const idx = fallingStars.indexOf(star);
     if (idx >= 0) fallingStars.splice(idx, 1);
-    seeds.seed_yellow++;
-    console.log('🌱 СЕМЯ ВЫДАНО! Всего:', getTotalSeeds());
+    seeds.seed_yellow = (seeds.seed_yellow || 0) + 1;
+    console.log('🌱 ЖЁЛТОЕ СЕМЯ!', seeds.seed_yellow);
     if (totalCaught % 20 === 0) wave++;
     updateUI();
 }
